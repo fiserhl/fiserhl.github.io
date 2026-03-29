@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 4: But Is It Right? - ADMN 3000</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: #000000;
+            background-color: #FFFFFF;
+            line-height: 1.6;
+        }
+
+        /* Header Banner */
+        .header-banner {
+            background-color: #21145F;
+            color: #FFFFFF;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .header-banner h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .header-banner .subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-weight: 400;
+            color: #EBE8F4;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 1.5rem 2rem;
+        }
+
+        /* Section Styling */
+        .section {
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background-color: #FFFFFF;
+        }
+
+        .section h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            color: #21145F;
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid #EBE8F4;
+            padding-bottom: 1rem;
+        }
+
+        .section h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            color: #21145F;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+            color: #000000;
+        }
+
+        /* Callout Box */
+        .callout {
+            background-color: #EBE8F4;
+            border-left: 5px solid #21145F;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+
+        .callout-quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #21145F;
+            font-style: italic;
+            margin-bottom: 0.5rem;
+        }
+
+        .callout-text {
+            font-size: 1rem;
+            color: #75787B;
+        }
+
+        /* Three Frameworks - Flip Cards */
+        .frameworks-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .flip-card {
+            background-color: transparent;
+            perspective: 1000px;
+            height: 300px;
+            cursor: pointer;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .flip-card-front {
+            background-color: #21145F;
+            color: #FFFFFF;
+        }
+
+        .flip-card-back {
+            background-color: #EBE8F4;
+            color: #000000;
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            color: #FFFFFF;
+            margin-bottom: 0.5rem;
+        }
+
+        .flip-card-front .click-hint {
+            font-size: 0.85rem;
+            color: #EBE8F4;
+            margin-top: 1rem;
+        }
+
+        .flip-card-back h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            color: #21145F;
+            margin-bottom: 1rem;
+        }
+
+        .flip-card-back p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #000000;
+        }
+
+        /* Stakeholder Map */
+        .stakeholder-map {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 2rem 0;
+            min-height: 600px;
+        }
+
+        .stakeholder-center {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background-color: #E84B8A;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 1rem;
+            z-index: 10;
+            box-shadow: 0 4px 12px rgba(232, 75, 138, 0.3);
+        }
+
+        .stakeholder-center h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            color: #FFFFFF;
+            font-weight: 700;
+        }
+
+        .stakeholder-cards {
+            position: relative;
+            width: 100%;
+            height: 500px;
+        }
+
+        .stakeholder-card {
+            position: absolute;
+            width: 140px;
+            background-color: #EBE8F4;
+            border: 2px solid #21145F;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .stakeholder-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            background-color: #FFFFFF;
+        }
+
+        .stakeholder-card h5 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            color: #21145F;
+            margin-bottom: 0.5rem;
+        }
+
+        .stakeholder-card .impact-text {
+            font-size: 0.85rem;
+            color: #000000;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .stakeholder-card.active .impact-text {
+            max-height: 200px;
+            margin-top: 0.5rem;
+        }
+
+        .stakeholder-card.top-left { top: 0; left: 0; }
+        .stakeholder-card.top-center { top: 0; left: 50%; transform: translateX(-50%); }
+        .stakeholder-card.top-right { top: 0; right: 0; }
+        .stakeholder-card.middle-left { top: 50%; left: -20px; transform: translateY(-50%); }
+        .stakeholder-card.middle-right { top: 50%; right: -20px; transform: translateY(-50%); }
+        .stakeholder-card.bottom-left { bottom: 0; left: 0; }
+        .stakeholder-card.bottom-center { bottom: 0; left: 50%; transform: translateX(-50%); }
+        .stakeholder-card.bottom-right { bottom: 0; right: 0; }
+
+        /* Case Analysis */
+        .case-scenario {
+            background-color: #EBE8F4;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            border-left: 5px solid #E84B8A;
+        }
+
+        .case-scenario h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            color: #21145F;
+            margin-bottom: 1rem;
+        }
+
+        .case-scenario p {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #000000;
+        }
+
+        .analysis-prompts {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .analysis-prompt {
+            background-color: #FFFFFF;
+            border: 2px solid #21145F;
+            border-radius: 8px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .analysis-prompt:hover {
+            background-color: #EBE8F4;
+            box-shadow: 0 4px 12px rgba(33, 20, 95, 0.1);
+        }
+
+        .analysis-prompt h5 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            color: #21145F;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .analysis-prompt .toggle-icon {
+            font-size: 1.3rem;
+            color: #E84B8A;
+        }
+
+        .analysis-prompt .answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding-top: 0;
+            color: #75787B;
+        }
+
+        .analysis-prompt.expanded .answer {
+            max-height: 500px;
+            padding-top: 1rem;
+            margin-top: 1rem;
+            border-top: 1px solid #EBE8F4;
+        }
+
+        /* Quick Check */
+        .quick-check {
+            background-color: #FFFFFF;
+            border: 2px solid #21145F;
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+        }
+
+        .check-question {
+            margin-bottom: 1.5rem;
+        }
+
+        .check-question p {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #21145F;
+        }
+
+        .check-options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.75rem;
+        }
+
+        .check-option {
+            padding: 0.75rem;
+            border: 2px solid #75787B;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: #FFFFFF;
+            color: #000000;
+        }
+
+        .check-option:hover {
+            border-color: #21145F;
+            background-color: #EBE8F4;
+        }
+
+        .check-option input[type="radio"] {
+            margin-right: 0.5rem;
+        }
+
+        .check-option.correct {
+            background-color: #E84B8A;
+            color: #FFFFFF;
+            border-color: #E84B8A;
+        }
+
+        .check-option.incorrect {
+            background-color: #FFE8E8;
+            border-color: #E84B8A;
+        }
+
+        /* Completion Banner */
+        .completion-banner {
+            background-color: #EBE8F4;
+            border: 3px solid #21145F;
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+            display: none;
+        }
+
+        .completion-banner.show {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .completion-banner h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            color: #21145F;
+            margin-bottom: 1rem;
+        }
+
+        .completion-banner p {
+            font-size: 1.1rem;
+            color: #000000;
+            margin-bottom: 1.5rem;
+        }
+
+        .completion-button {
+            display: inline-block;
+            background-color: #E84B8A;
+            color: #FFFFFF;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .completion-button:hover {
+            background-color: #21145F;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(232, 75, 138, 0.3);
+        }
+
+        /* Navigation Footer */
+        .footer-navigation {
+            background-color: #EBE8F4;
+            padding: 2rem;
+            margin-top: 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .nav-link {
+            color: #21145F;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .nav-link:hover {
+            background-color: #21145F;
+            color: #FFFFFF;
+        }
+
+        .nav-link.primary {
+            background-color: #21145F;
+            color: #FFFFFF;
+        }
+
+        .progress-indicator {
+            font-size: 0.9rem;
+            color: #75787B;
+            font-weight: 600;
+        }
+
+        .moodle-link {
+            background-color: #E84B8A;
+            color: #FFFFFF;
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+            margin-top: 1rem;
+        }
+
+        .moodle-link:hover {
+            background-color: #21145F;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-banner h1 {
+                font-size: 2rem;
+            }
+
+            .header-banner .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .section {
+                padding: 1.5rem;
+            }
+
+            .section h2 {
+                font-size: 1.5rem;
+            }
+
+            .frameworks-container {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .flip-card {
+                height: 250px;
+            }
+
+            .stakeholder-map {
+                min-height: 400px;
+            }
+
+            .stakeholder-cards {
+                height: 300px;
+            }
+
+            .stakeholder-center {
+                width: 150px;
+                height: 150px;
+            }
+
+            .stakeholder-card {
+                width: 100px;
+                font-size: 0.9rem;
+            }
+
+            .footer-navigation {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .nav-link {
+                display: block;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Banner -->
+    <div class="header-banner">
+        <h1>Module 4: But Is It Right?</h1>
+        <div class="subtitle">Ethical Frameworks and Employment Discrimination</div>
+    </div>
+
+    <div class="container">
+        <!-- Section 1: Why Ethics Matters -->
+        <section class="section">
+            <h2>Why Ethics Matters in Law</h2>
+            <div class="callout">
+                <div class="callout-quote">Legal is not the same as ethical. The space between them is where reputations live.</div>
+            </div>
+            <p>A company may follow the letter of the law while violating its spirit. Consider this: a company that hires only the legally minimum number of protected-class workers is technically compliant with employment law. But is it acting ethically?</p>
+            <p>The line between legal compliance and ethical behavior is where most real-world decisions happen. Legal consequences can be managed and eventually resolved. But ethical failures damage trust, morale, and reputation in ways that are far harder to repair.</p>
+        </section>
+
+        <!-- Section 2: Three Frameworks (Flip Cards) -->
+        <section class="section">
+            <h2>Three Ethical Frameworks</h2>
+            <p>Different ethical frameworks offer different lenses for evaluating discriminatory decisions. Click each card to learn more.</p>
+            <div class="frameworks-container">
+                <!-- Stakeholder Theory -->
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <h3>Stakeholder Theory</h3>
+                            <div class="click-hint">Click to learn more</div>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4>Who is affected?</h4>
+                            <p>Employees, applicants, families, communities, customers, shareholders. Stakeholder theory requires that business decisions weigh all stakeholders, not just shareholders. Discrimination harms multiple stakeholder groups simultaneously.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rights-Based / Kantian -->
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <h3>Rights-Based (Kantian)</h3>
+                            <div class="click-hint">Click to learn more</div>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4>Human Dignity</h4>
+                            <p>People have inherent dignity. The categorical imperative: never use someone merely as a means to an end. Discrimination treats people as tools for profit, not as persons deserving respect. This violates the core principle of human rights.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Utilitarianism -->
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <h3>Utilitarianism</h3>
+                            <div class="click-hint">Click to learn more</div>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4>Greatest Good</h4>
+                            <p>The greatest good for the greatest number. Discrimination misallocates talent, reduces productivity, harms communities economically, and creates inefficiency. Even from a purely utilitarian calculus, the math does not favor discrimination.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Stakeholder Mapping (Interactive) -->
+        <section class="section">
+            <h2>Stakeholder Mapping: A Real Scenario</h2>
+            <p>Click each stakeholder card to see the impact of a discriminatory decision. The center scenario shows a decision that violates multiple ethical frameworks.</p>
+
+            <div class="stakeholder-map">
+                <div class="stakeholder-center">
+                    <h4>Company fires qualified 62-year-old</h4>
+                    <h4>Replaces with 24-year-old</h4>
+                </div>
+                <div class="stakeholder-cards">
+                    <!-- Fired Employee -->
+                    <div class="stakeholder-card top-left">
+                        <h5>Fired Employee</h5>
+                        <div class="impact-text">Loss of income, dignity, career trajectory. Late-career age discrimination often leads to long-term unemployment and financial hardship.</div>
+                    </div>
+
+                    <!-- The Younger Hire -->
+                    <div class="stakeholder-card top-center">
+                        <h5>The 24-Year-Old</h5>
+                        <div class="impact-text">Gains position they may not be ready for. Lacks experience and institutional knowledge. Sets precedent that tenure and competence matter less than age.</div>
+                    </div>
+
+                    <!-- Shareholders -->
+                    <div class="stakeholder-card top-right">
+                        <h5>Shareholders</h5>
+                        <div class="impact-text">Short-term cost savings; long-term legal liability. Age discrimination lawsuits are expensive. Reputation damage affects stock value.</div>
+                    </div>
+
+                    <!-- Other Employees -->
+                    <div class="stakeholder-card middle-left">
+                        <h5>Other Employees</h5>
+                        <div class="impact-text">Reduced morale and loyalty. Fear of similar treatment. Message: experience and competence don't protect you from arbitrary decisions.</div>
+                    </div>
+
+                    <!-- Customers -->
+                    <div class="stakeholder-card middle-right">
+                        <h5>Customers</h5>
+                        <div class="impact-text">Potentially worse service from less experienced worker. Customers value consistency, expertise, and reliability. This decision undermines all three.</div>
+                    </div>
+
+                    <!-- Community -->
+                    <div class="stakeholder-card bottom-left">
+                        <h5>Community</h5>
+                        <div class="impact-text">Normalized ageism. Loss of experienced worker from local economy. Reduced tax base and civic contribution from unemployed worker.</div>
+                    </div>
+
+                    <!-- Job Market -->
+                    <div class="stakeholder-card bottom-center">
+                        <h5>Job Market</h5>
+                        <div class="impact-text">Misallocation of talent. Experienced professional displaced; inexperienced hire underutilized. Inefficiency spreads across entire labor market.</div>
+                    </div>
+
+                    <!-- Company Culture -->
+                    <div class="stakeholder-card bottom-right">
+                        <h5>Company Culture</h5>
+                        <div class="impact-text">Trust eroded. Message sent: arbitrary factors matter more than merit. Retention of top talent becomes harder as word spreads.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Case Analysis -->
+        <section class="section">
+            <h2>Case Analysis: Cultural Fit</h2>
+            <div class="case-scenario">
+                <h4>The Scenario</h4>
+                <p>A tech company hires based on "cultural fit" rather than qualifications. In practice, this means hiring people who are similar to existing employees: young, similar background, similar hobbies and interests. The company's hiring committee rejects qualified candidates who don't "fit the vibe," even though their qualifications exceed internal candidates. Is this decision legal? Is it ethical?</p>
+            </div>
+
+            <div class="analysis-prompts">
+                <!-- Stakeholder Analysis -->
+                <div class="analysis-prompt">
+                    <h5>
+                        Using Stakeholder Theory
+                        <span class="toggle-icon">+</span>
+                    </h5>
+                    <div class="answer">
+                        <p><strong>Identified stakeholders affected:</strong> Job applicants (denied opportunity based on non-merit factors), existing employees (excluded groups may feel unwelcome), customers (reduced diversity of thought and perspective), shareholders (reduced talent pool = reduced innovation), the company (reputational risk in diverse markets), and society (reinforced social stratification).</p>
+                        <p><strong>Stakeholder theory verdict:</strong> This decision fails stakeholder analysis. It benefits a narrow in-group while harming multiple other stakeholders. A stakeholder framework would require the company to justify why excluding qualified candidates serves the collective interest.</p>
+                    </div>
+                </div>
+
+                <!-- Kantian Analysis -->
+                <div class="analysis-prompt">
+                    <h5>
+                        Using Kantian Ethics (Rights-Based)
+                        <span class="toggle-icon">+</span>
+                    </h5>
+                    <div class="answer">
+                        <p><strong>The core principle:</strong> People are ends in themselves, never merely means to others' ends. Using people instrumentally violates their dignity.</p>
+                        <p><strong>How "cultural fit" violates this:</strong> Qualified candidates are rejected because their identity or background doesn't match the company's aesthetic preferences. They are treated as means to the company's social comfort, not as persons with inherent worth and dignity. Their qualifications are irrelevant; their usefulness to the in-group's comfort is all that matters.</p>
+                        <p><strong>Kantian verdict:</strong> "Cultural fit" hiring violates human dignity. It treats people as decorative elements in a team rather than as respected professionals with agency and rights.</p>
+                    </div>
+                </div>
+
+                <!-- Utilitarian Analysis -->
+                <div class="analysis-prompt">
+                    <h5>
+                        Using Utilitarianism
+                        <span class="toggle-icon">+</span>
+                    </h5>
+                    <div class="answer">
+                        <p><strong>The utilitarian calculus:</strong> Does this decision maximize the greatest good for the greatest number?</p>
+                        <p><strong>Harms:</strong> Reduced innovation (homogenous teams have fewer perspectives), reduced decision quality (groupthink), reputational damage, legal liability, lost talent, reduced customer trust, lower productivity from less-qualified hires, and negative effects on social mobility.</p>
+                        <p><strong>Benefits:</strong> Slightly increased comfort for the in-group in the short term.</p>
+                        <p><strong>Utilitarian verdict:</strong> Fails. The harms vastly outweigh the benefits. Even looking purely at company welfare, diversity of thought drives better outcomes. The greatest good is not served by hiring for comfort over competence.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Quick Check -->
+        <section class="section">
+            <h2>Quick Check: Test Your Understanding</h2>
+            <div class="quick-check">
+                <!-- Question 1 -->
+                <div class="check-question">
+                    <p>Question 1: Stakeholder theory requires businesses to consider:</p>
+                    <div class="check-options">
+                        <label class="check-option">
+                            <input type="radio" name="q1" value="wrong1"> Only shareholder interests and profit
+                        </label>
+                        <label class="check-option">
+                            <input type="radio" name="q1" value="correct"> All affected parties: employees, applicants, families, communities, customers, shareholders
+                        </label>
+                        <label class="check-option">
+                            <input type="radio" name="q1" value="wrong2"> Only legal compliance requirements
+                        </label>
+                        <label class="check-option">
+                            <input type="radio" name="q1" value="wrong3"> Only the immediate business impact
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="check-question">
+                    <p>Question 2: Kantian ethics would characterize discrimination as:</p>
+                    <div class="check-options">
+                        <label class="check-option">
+                            <input type="radio" name="q2" value="wrong1"> A legitimate business strategy
+                        </label>
+                        <label class="check-option">
+                            <input type="radio" name="q2" value="correct"> Using persons as means to an end, violating their inherent dignity
+                        </label>
+                        <label class="check-option">
+                            <input type="radio" name="q2" value="wrong2"> Acceptable if it increases company profit
+                        </label>
+                        <label class="check-option">
+                            <input type="radio" name="q2" value="wrong3"> A neutral business decision
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="check-question">
+                    <p>Question 3: A utilitarian analysis finds discrimination problematic because:</p>
+                    <div class="check-options">
+                        <label class="check-option">
+                            <input type="radio" name="q3" value="wrong1"> It violates individual dignity
+                        </label>
+                        <label class="check-option">
+                            <input type="radio" name="q3" value="wrong2"> Laws prohibit it
+                        </label>
+                        <label class="check-option">
+                            <input type="radio" name="q3" value="correct"> It misallocates talent, reduces productivity, harms communities, and creates total welfare loss
+                        </label>
+                        <label class="check-option">
+                            <input type="radio" name="q3" value="wrong3"> It makes employees uncomfortable
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Completion Banner -->
+        <section class="completion-banner" id="completionBanner">
+            <h3>Congratulations!</h3>
+            <p>You have completed all four training modules!</p>
+            <p>Return to Moodle to take the Knowledge Check Quiz and assess your understanding of employment discrimination law, evidence standards, and ethical frameworks.</p>
+            <a href="https://courses.millsaps.edu/course/view.php?id=9775" class="completion-button">Return to Moodle</a>
+        </section>
+    </div>
+
+    <!-- Footer Navigation -->
+    <div class="footer-navigation">
+        <a href="module3.html" class="nav-link">← McDonnell Douglas Framework</a>
+        <span class="progress-indicator">Progress: 4/4 Modules Complete</span>
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="https://courses.millsaps.edu/course/view.php?id=9775" class="moodle-link">Return to Moodle →</a>
+    </div>
+
+    <script>
+        // Flip Cards Functionality
+        const flipCards = document.querySelectorAll('.flip-card');
+        flipCards.forEach(card => {
+            card.addEventListener('click', function() {
+                this.classList.toggle('flipped');
+            });
+        });
+
+        // Stakeholder Cards - Click to Expand
+        const stakeholderCards = document.querySelectorAll('.stakeholder-card');
+        stakeholderCards.forEach(card => {
+            card.addEventListener('click', function() {
+                stakeholderCards.forEach(c => c.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Analysis Prompts - Expandable
+        const analysisPrompts = document.querySelectorAll('.analysis-prompt');
+        analysisPrompts.forEach(prompt => {
+            prompt.addEventListener('click', function() {
+                this.classList.toggle('expanded');
+            });
+        });
+
+        // Quick Check - Radio Button Validation
+        const checkOptions = document.querySelectorAll('.check-option');
+        checkOptions.forEach(option => {
+            const radio = option.querySelector('input[type="radio"]');
+            radio.addEventListener('change', function() {
+                const question = this.name;
+                const allOptions = document.querySelectorAll(`input[name="${question}"]`);
+
+                checkOptions.forEach(opt => {
+                    const rad = opt.querySelector('input[type="radio"]');
+                    if (rad.name === question) {
+                        opt.classList.remove('correct', 'incorrect');
+                    }
+                });
+
+                checkOptions.forEach(opt => {
+                    const rad = opt.querySelector('input[type="radio"]');
+                    if (rad === this) {
+                        if (this.value === 'correct') {
+                            opt.classList.add('correct');
+                            // Check if all questions answered correctly
+                            checkCompletion();
+                        } else {
+                            opt.classList.add('incorrect');
+                        }
+                    }
+                });
+            });
+        });
+
+        // Check if module is complete (all questions answered)
+        function checkCompletion() {
+            const q1 = document.querySelector('input[name="q1"]:checked');
+            const q2 = document.querySelector('input[name="q2"]:checked');
+            const q3 = document.querySelector('input[name="q3"]:checked');
+
+            if (q1 && q2 && q3) {
+                const allCorrect = q1.value === 'correct' && q2.value === 'correct' && q3.value === 'correct';
+                if (allCorrect) {
+                    // Scroll to completion banner
+                    setTimeout(() => {
+                        const banner = document.getElementById('completionBanner');
+                        banner.classList.add('show');
+                        banner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 300);
+                }
+            }
+        }
+
+        // Show completion banner on page load if returning user
+        window.addEventListener('load', function() {
+            // Show banner after a brief delay for visual effect
+            setTimeout(() => {
+                const banner = document.getElementById('completionBanner');
+                // Only show if explicitly triggered by user completion
+            }, 500);
+        });
+    </script>
+</body>
+</html>

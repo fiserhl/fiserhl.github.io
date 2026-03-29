@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 1: Who Works For Whom? | Employment Law Training</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: #000000;
+            background-color: #FFFFFF;
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        .header {
+            background-color: #21145F;
+            color: #FFFFFF;
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .header p {
+            font-size: 1.3em;
+            font-weight: 400;
+            color: #EBE8F4;
+        }
+
+        /* Container and Section Styles */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 60px 0;
+            border-bottom: 1px solid #EBE8F4;
+        }
+
+        section:last-of-type {
+            border-bottom: none;
+        }
+
+        h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2em;
+            font-weight: 700;
+            color: #21145F;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5em;
+            font-weight: 600;
+            color: #21145F;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        p {
+            margin-bottom: 20px;
+            font-size: 1em;
+            color: #000000;
+            line-height: 1.8;
+        }
+
+        /* Section 1: The Stakes */
+        .stakes-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .stakes-card {
+            background-color: #EBE8F4;
+            padding: 30px;
+            border-radius: 8px;
+            border-left: 5px solid #21145F;
+        }
+
+        .stakes-card h3 {
+            margin-top: 0;
+            font-size: 1.3em;
+        }
+
+        .stakes-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .stakes-card li {
+            margin-bottom: 12px;
+            padding-left: 25px;
+            position: relative;
+            font-size: 0.95em;
+        }
+
+        .stakes-card li:before {
+            content: "•";
+            color: #E84B8A;
+            font-weight: bold;
+            font-size: 1.3em;
+            position: absolute;
+            left: 0;
+        }
+
+        /* Section 2: Accordion Styles */
+        .accordion-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .accordion-item {
+            background-color: #FFFFFF;
+            border: 2px solid #21145F;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 0;
+            transition: all 0.3s ease;
+        }
+
+        .accordion-item:hover {
+            box-shadow: 0 4px 12px rgba(33, 20, 95, 0.15);
+        }
+
+        .accordion-header {
+            background-color: #21145F;
+            color: #FFFFFF;
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            user-select: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .accordion-header:hover {
+            background-color: #1a0d45;
+        }
+
+        .accordion-number {
+            background-color: #E84B8A;
+            color: #FFFFFF;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .accordion-title {
+            flex: 1;
+        }
+
+        .accordion-toggle {
+            font-size: 1.5em;
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-item.active .accordion-toggle {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background-color: #FFFFFF;
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 500px;
+        }
+
+        .accordion-body {
+            padding: 25px;
+            border-top: 2px solid #EBE8F4;
+        }
+
+        .accordion-body p {
+            margin-bottom: 15px;
+            font-size: 0.95em;
+        }
+
+        .indicator-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85em;
+            margin-top: 15px;
+        }
+
+        .indicator-badge.ic {
+            background-color: #E84B8A;
+            color: #FFFFFF;
+        }
+
+        .indicator-badge.employee {
+            background-color: #21145F;
+            color: #FFFFFF;
+        }
+
+        /* Section 3: ABC Test Table */
+        .abc-table {
+            width: 100%;
+            margin-top: 40px;
+            border-collapse: collapse;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(33, 20, 95, 0.1);
+        }
+
+        .abc-table th {
+            background-color: #21145F;
+            color: #FFFFFF;
+            padding: 20px;
+            text-align: left;
+            font-weight: 600;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1em;
+        }
+
+        .abc-table td {
+            padding: 20px;
+            border-bottom: 1px solid #EBE8F4;
+        }
+
+        .abc-table tr:nth-child(even) {
+            background-color: #FFFFFF;
+        }
+
+        .abc-table tr:nth-child(odd) {
+            background-color: #F9F9FB;
+        }
+
+        .abc-table tr:hover td {
+            background-color: #EBE8F4;
+        }
+
+        .example-row {
+            background-color: #EBE8F4;
+            font-weight: 600;
+        }
+
+        /* Section 4: Classification Exercise */
+        .exercise-intro {
+            background-color: #EBE8F4;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border-left: 5px solid #E84B8A;
+        }
+
+        .fact-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .fact-card {
+            background-color: #FFFFFF;
+            border: 2px solid #75787B;
+            border-radius: 8px;
+            padding: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .fact-card:hover {
+            box-shadow: 0 6px 16px rgba(33, 20, 95, 0.15);
+            border-color: #21145F;
+        }
+
+        .fact-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.9em;
+            color: #75787B;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .fact-text {
+            font-size: 0.95em;
+            margin-bottom: 20px;
+            color: #000000;
+            line-height: 1.6;
+        }
+
+        .fact-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .fact-btn {
+            flex: 1;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85em;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .fact-btn.employee {
+            background-color: #21145F;
+            color: #FFFFFF;
+        }
+
+        .fact-btn.employee:hover {
+            background-color: #1a0d45;
+            transform: translateY(-2px);
+        }
+
+        .fact-btn.ic {
+            background-color: #E84B8A;
+            color: #FFFFFF;
+        }
+
+        .fact-btn.ic:hover {
+            background-color: #d63878;
+            transform: translateY(-2px);
+        }
+
+        .fact-btn.selected {
+            transform: scale(0.98);
+            opacity: 0.8;
+        }
+
+        .summary-box {
+            background-color: #EBE8F4;
+            border-left: 5px solid #21145F;
+            padding: 25px;
+            border-radius: 8px;
+            margin-top: 30px;
+            display: none;
+        }
+
+        .summary-box.show {
+            display: block;
+            animation: slideIn 0.4s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .summary-score {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #21145F;
+            margin-bottom: 15px;
+        }
+
+        .summary-text {
+            font-size: 0.95em;
+            line-height: 1.7;
+        }
+
+        .key-insight {
+            background-color: #FFFFFF;
+            border: 2px dashed #E84B8A;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-style: italic;
+            color: #21145F;
+        }
+
+        /* Section 5: Quick Check Quiz */
+        .quiz-container {
+            margin-top: 40px;
+        }
+
+        .quiz-question {
+            background-color: #FFFFFF;
+            border: 2px solid #21145F;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+        }
+
+        .quiz-question h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1em;
+            color: #21145F;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .quiz-option {
+            display: flex;
+            align-items: center;
+        }
+
+        .quiz-option input[type="radio"] {
+            margin-right: 15px;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+            accent-color: #21145F;
+        }
+
+        .quiz-option label {
+            cursor: pointer;
+            font-size: 0.95em;
+            flex: 1;
+        }
+
+        .quiz-feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 6px;
+            display: none;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .quiz-feedback.show {
+            display: block;
+        }
+
+        .quiz-feedback.correct {
+            background-color: #E8F5E9;
+            color: #2E7D32;
+            border-left: 4px solid #4CAF50;
+        }
+
+        .quiz-feedback.incorrect {
+            background-color: #FFEBEE;
+            color: #C62828;
+            border-left: 4px solid #F44336;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #F5F5F5;
+            padding: 40px;
+            margin-top: 60px;
+            border-top: 2px solid #EBE8F4;
+        }
+
+        .footer-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .progress-bar-container {
+            margin-bottom: 30px;
+        }
+
+        .progress-label {
+            font-size: 0.85em;
+            color: #75787B;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: #EBE8F4;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 25%;
+            background-color: #21145F;
+            transition: width 0.3s ease;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .nav-btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .nav-btn.home {
+            background-color: #75787B;
+            color: #FFFFFF;
+        }
+
+        .nav-btn.home:hover {
+            background-color: #5a5c60;
+            transform: translateY(-2px);
+        }
+
+        .nav-btn.next {
+            background-color: #21145F;
+            color: #FFFFFF;
+        }
+
+        .nav-btn.next:hover {
+            background-color: #1a0d45;
+            transform: translateY(-2px);
+        }
+
+        .moodle-link {
+            color: #21145F;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9em;
+            display: inline-block;
+            margin-top: 15px;
+        }
+
+        .moodle-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .header p {
+                font-size: 1em;
+            }
+
+            .stakes-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .accordion-container {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 40px 0;
+            }
+
+            .nav-buttons {
+                justify-content: center;
+            }
+
+            h2 {
+                font-size: 1.8em;
+            }
+
+            .fact-cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .abc-table {
+                font-size: 0.9em;
+            }
+
+            .abc-table th,
+            .abc-table td {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <h1>Module 1: Who Works For Whom?</h1>
+        <p>Independent Contractor vs. Employee Classification</p>
+    </div>
+
+    <div class="container">
+        <!-- Section 1: The Stakes -->
+        <section id="section1">
+            <h2>The Stakes: Why Classification Matters</h2>
+            <p>Whether a worker is classified as an independent contractor (IC) or employee has profound consequences for everyone involved. This single determination shapes legal rights, financial obligations, and business operations.</p>
+
+            <div class="stakes-grid">
+                <div class="stakes-card">
+                    <h3>Independent Contractor (IC)</h3>
+                    <ul>
+                        <li>No payroll taxes withheld</li>
+                        <li>No benefits (health, retirement, workers comp)</li>
+                        <li>No Title VII employment protections</li>
+                        <li>No ADA accommodations required</li>
+                        <li>Misclassification: civil penalties + back taxes</li>
+                        <li>Company has lower tort liability</li>
+                    </ul>
+                </div>
+
+                <div class="stakes-card">
+                    <h3>Employee</h3>
+                    <ul>
+                        <li>Employer withholds payroll taxes</li>
+                        <li>Entitled to benefits (statutory minimum)</li>
+                        <li>Protected by Title VII, ADEA, ADA, FMLA</li>
+                        <li>Workers compensation coverage required</li>
+                        <li>Misclassification: wage claims + penalties</li>
+                        <li>Company liable for employee negligence (respondeat superior)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Economic Reality Test -->
+        <section id="section2">
+            <h2>The Economic Reality Test</h2>
+            <p>Courts apply a multi-factor test that examines the actual economic relationship between the parties, not the label they use. No single factor is determinative. The IRS and Department of Labor use this framework.</p>
+
+            <div class="accordion-container">
+                <div class="accordion-item" data-factor="1">
+                    <div class="accordion-header">
+                        <span class="accordion-number">1</span>
+                        <span class="accordion-title">Control</span>
+                        <span class="accordion-toggle">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p><strong>Does the company control how the work is done?</strong></p>
+                            <p>An employee is subject to the employer's control over the manner and means of work. An IC exercises independent judgment and controls their own methods. Consider: Does the company set hours? Provide detailed instructions? Require approval before work begins? Dictate the final product format?</p>
+                            <p><strong>Employee Example:</strong> Accountant must follow company procedures, use company systems, attend meetings, report to supervisor.</p>
+                            <p><strong>IC Example:</strong> Freelance designer chooses their tools, hours, and methods—only the final deliverable is specified.</p>
+                            <span class="indicator-badge employee">POINTS TO: EMPLOYEE</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item" data-factor="2">
+                    <div class="accordion-header">
+                        <span class="accordion-number">2</span>
+                        <span class="accordion-title">Integration</span>
+                        <span class="accordion-toggle">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p><strong>Is the work integral to the company's core business?</strong></p>
+                            <p>If the work is directly tied to the company's main purpose, it suggests employment. Peripheral or ancillary services can indicate IC status. For example, a software company's programmers are integral; its janitorial contractor is peripheral.</p>
+                            <p><strong>Employee Example:</strong> Software engineers at a tech company perform work central to the business.</p>
+                            <p><strong>IC Example:</strong> Outside counsel providing occasional legal advice to the same company.</p>
+                            <span class="indicator-badge employee">POINTS TO: EMPLOYEE</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item" data-factor="3">
+                    <div class="accordion-header">
+                        <span class="accordion-number">3</span>
+                        <span class="accordion-title">Permanence</span>
+                        <span class="accordion-toggle">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p><strong>How long and how continuously has the relationship lasted?</strong></p>
+                            <p>Long-term, continuous relationships signal employment. Short-term, project-based work suggests IC status. A worker hired for one specific task differs from one kept on for years. Renewal of contracts and ongoing expectations matter here.</p>
+                            <p><strong>Employee Example:</strong> Staff accountant has worked for the company for 5 years with no end date.</p>
+                            <p><strong>IC Example:</strong> Consultant hired for a 6-month system redesign project with a defined end date.</p>
+                            <span class="indicator-badge employee">POINTS TO: EMPLOYEE</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item" data-factor="4">
+                    <div class="accordion-header">
+                        <span class="accordion-number">4</span>
+                        <span class="accordion-title">Investment</span>
+                        <span class="accordion-toggle">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p><strong>Who provides the tools, equipment, and work location?</strong></p>
+                            <p>If the company provides computers, office space, supplies, and software, the worker is more likely an employee. ICs typically invest in their own tools and infrastructure. This reflects the IC's independent business model.</p>
+                            <p><strong>Employee Example:</strong> Company provides office, computer, phone, all software licenses.</p>
+                            <p><strong>IC Example:</strong> Freelancer uses their own laptop, software, home office; company pays a flat fee.</p>
+                            <span class="indicator-badge employee">POINTS TO: EMPLOYEE</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item" data-factor="5">
+                    <div class="accordion-header">
+                        <span class="accordion-number">5</span>
+                        <span class="accordion-title">Economic Dependence</span>
+                        <span class="accordion-toggle">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p><strong>Does the worker depend on this one company for income?</strong></p>
+                            <p>If a worker relies primarily or entirely on one company for their livelihood, they are economically dependent—a sign of employment. ICs have diverse clients and income streams. A worker who cannot afford to lose this one job is less truly independent.</p>
+                            <p><strong>Employee Example:</strong> Accountant gets 100% of income from this company; cannot realistically work elsewhere simultaneously.</p>
+                            <p><strong>IC Example:</strong> Consultant serves 8 different clients; any one client represents less than 20% of annual revenue.</p>
+                            <span class="indicator-badge employee">POINTS TO: EMPLOYEE</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item" data-factor="6">
+                    <div class="accordion-header">
+                        <span class="accordion-number">6</span>
+                        <span class="accordion-title">Profit or Loss</span>
+                        <span class="accordion-toggle">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p><strong>Can the worker profit or suffer loss independent of the company?</strong></p>
+                            <p>True ICs have the opportunity for profit (smart decisions yield higher income) and risk of loss (poor decisions yield lower income). Employees receive a set wage regardless of company profitability. An IC's compensation varies with business performance and efficiency.</p>
+                            <p><strong>Employee Example:</strong> Accountant earns a fixed salary; company profit or loss does not affect their pay.</p>
+                            <p><strong>IC Example:</strong> Contractor negotiates a fixed-price project; finishes ahead of schedule and earns a profit, or encounters problems and takes a loss.</p>
+                            <span class="indicator-badge ic">POINTS TO: IC</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: ABC Test -->
+        <section id="section3">
+            <h2>The ABC Test (Alternative Classification Threshold)</h2>
+            <p>Some jurisdictions (notably California under Assembly Bill 5) apply a stricter ABC test. A worker is presumed an employee UNLESS the company can prove ALL THREE of these:</p>
+
+            <table class="abc-table">
+                <thead>
+                    <tr>
+                        <th>Factor A<br>Free from Control</th>
+                        <th>Factor B<br>Outside Core Business</th>
+                        <th>Factor C<br>Independent</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Worker is not subject to control or direction by the company regarding work performance.</td>
+                        <td>The work is outside the company's normal course of business.</td>
+                        <td>Worker is customarily engaged in an independently established occupation of the same nature as the work performed.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Pass:</strong> Worker sets own hours, methods, no supervisory oversight.</td>
+                        <td><strong>Pass:</strong> Company is tech; hires external cleaning service.</td>
+                        <td><strong>Pass:</strong> Worker has 10 other consulting clients in the field.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Fail:</strong> Company mandates hours, schedules, work methods.</td>
+                        <td><strong>Fail:</strong> Company is ride-share; driver performs core service.</td>
+                        <td><strong>Fail:</strong> Worker does this work for this company only.</td>
+                    </tr>
+                    <tr class="example-row">
+                        <td colspan="3"><strong>Rideshare Driver (Uber/Lyft):</strong> Fails A (app controls routing, acceptance, ratings). Fails B (ride provision is core business). Fails C (not established taxi/consulting business). Result: EMPLOYEE under ABC.</td>
+                    </tr>
+                    <tr class="example-row">
+                        <td colspan="3"><strong>Staff Accountant (Company):</strong> Fails A (subject to company control). Fails B (integral to business). Fails C (not independently established). Result: EMPLOYEE under ABC.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Section 4: Classification Exercise -->
+        <section id="section4">
+            <h2>Try It! Interactive Classification Exercise</h2>
+            <div class="exercise-intro">
+                <strong>Scenario:</strong> Meet Brayden Thunderforce. A company is considering whether to hire Brayden as an employee or 1099 IC. Below are 8 facts about the working relationship. Click each fact and classify it as an EMPLOYEE INDICATOR or IC INDICATOR. When you've classified all 8, you'll see a summary and analysis.
+            </div>
+
+            <div class="fact-cards-grid" id="factCards">
+                <div class="fact-card">
+                    <div class="fact-number">FACT 1</div>
+                    <div class="fact-text">Brayden must use the company's proprietary equipment, software, and office space. The company provides everything.</div>
+                    <div class="fact-buttons">
+                        <button class="fact-btn employee" data-fact="1" data-indicator="employee">EMPLOYEE</button>
+                        <button class="fact-btn ic" data-fact="1" data-indicator="ic">IC</button>
+                    </div>
+                </div>
+
+                <div class="fact-card">
+                    <div class="fact-number">FACT 2</div>
+                    <div class="fact-text">Brayden is exclusively available to this company and cannot work for competitors or take other clients.</div>
+                    <div class="fact-buttons">
+                        <button class="fact-btn employee" data-fact="2" data-indicator="employee">EMPLOYEE</button>
+                        <button class="fact-btn ic" data-fact="2" data-indicator="ic">IC</button>
+                    </div>
+                </div>
+
+                <div class="fact-card">
+                    <div class="fact-number">FACT 3</div>
+                    <div class="fact-text">The company sets Brayden's work schedule: 9am–5pm, Monday through Friday, 40 hours per week.</div>
+                    <div class="fact-buttons">
+                        <button class="fact-btn employee" data-fact="3" data-indicator="employee">EMPLOYEE</button>
+                        <button class="fact-btn ic" data-fact="3" data-indicator="ic">IC</button>
+                    </div>
+                </div>
+
+                <div class="fact-card">
+                    <div class="fact-number">FACT 4</div>
+                    <div class="fact-text">Brayden must attend mandatory weekly team meetings and report to a direct supervisor.</div>
+                    <div class="fact-buttons">
+                        <button class="fact-btn employee" data-fact="4" data-indicator="employee">EMPLOYEE</button>
+                        <button class="fact-btn ic" data-fact="4" data-indicator="ic">IC</button>
+                    </div>
+                </div>
+
+                <div class="fact-card">
+                    <div class="fact-number">FACT 5</div>
+                    <div class="fact-text">All work must be approved by management before final delivery. The company controls how the work is performed.</div>
+                    <div class="fact-buttons">
+                        <button class="fact-btn employee" data-fact="5" data-indicator="employee">EMPLOYEE</button>
+                        <button class="fact-btn ic" data-fact="5" data-indicator="ic">IC</button>
+                    </div>
+                </div>
+
+                <div class="fact-card">
+                    <div class="fact-number">FACT 6</div>
+                    <div class="fact-text">Brayden receives a weekly paycheck of $2,000. Pay is fixed regardless of company profits or losses.</div>
+                    <div class="fact-buttons">
+                        <button class="fact-btn employee" data-fact="6" data-indicator="employee">EMPLOYEE</button>
+                        <button class="fact-btn ic" data-fact="6" data-indicator="ic">IC</button>
+                    </div>
+                </div>
+
+                <div class="fact-card">
+                    <div class="fact-number">FACT 7</div>
+                    <div class="fact-text">This relationship has already lasted 3 years with no end date. Brayden is expected to stay indefinitely unless terminated.</div>
+                    <div class="fact-buttons">
+                        <button class="fact-btn employee" data-fact="7" data-indicator="employee">EMPLOYEE</button>
+                        <button class="fact-btn ic" data-fact="7" data-indicator="ic">IC</button>
+                    </div>
+                </div>
+
+                <div class="fact-card">
+                    <div class="fact-number">FACT 8</div>
+                    <div class="fact-text">The contract states: "Brayden is an independent contractor and is not an employee of the company."</div>
+                    <div class="fact-buttons">
+                        <button class="fact-btn ic" data-fact="8" data-indicator="ic">IC</button>
+                        <button class="fact-btn employee" data-fact="8" data-indicator="employee">EMPLOYEE</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="summary-box" id="summaryBox">
+                <div class="summary-score" id="scoreDisplay"></div>
+                <div class="summary-text" id="summaryText"></div>
+                <div class="key-insight">
+                    <strong>Key Insight:</strong> The written contract label ("independent contractor") is NOT determinative. Courts and regulators look at the actual economic reality. Even though Fact 8 points to IC, the overwhelming evidence (7 out of 8 factors) points to employee status. Brayden would very likely be classified as an employee, and misclassification could expose the company to significant liability.
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Quick Check -->
+        <section id="section5">
+            <h2>Quick Check: Instant Feedback Quiz</h2>
+            <p>Test your understanding with three key questions. Select your answer and check your work immediately.</p>
+
+            <div class="quiz-container">
+                <div class="quiz-question">
+                    <h4>Question 1: Which single factor is MOST important in the economic reality test?</h4>
+                    <div class="quiz-options">
+                        <div class="quiz-option">
+                            <input type="radio" id="q1a" name="q1" value="incorrect">
+                            <label for="q1a">Integration of the work into the core business</label>
+                        </div>
+                        <div class="quiz-option">
+                            <input type="radio" id="q1b" name="q1" value="correct">
+                            <label for="q1b">Control: How much the company controls how the work is done</label>
+                        </div>
+                        <div class="quiz-option">
+                            <input type="radio" id="q1c" name="q1" value="incorrect">
+                            <label for="q1c">The worker's investment in tools and equipment</label>
+                        </div>
+                        <div class="quiz-option">
+                            <input type="radio" id="q1d" name="q1" value="incorrect">
+                            <label for="q1d">All factors are equally important (no single factor is more important)</label>
+                        </div>
+                    </div>
+                    <div class="quiz-feedback" id="feedback1"></div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 2: A written independent contractor agreement...</h4>
+                    <div class="quiz-options">
+                        <div class="quiz-option">
+                            <input type="radio" id="q2a" name="q2" value="incorrect">
+                            <label for="q2a">Is conclusive proof of IC status; courts always respect the label</label>
+                        </div>
+                        <div class="quiz-option">
+                            <input type="radio" id="q2b" name="q2" value="correct">
+                            <label for="q2b">Is one factor in the analysis, but not determinative; courts look at actual economic reality</label>
+                        </div>
+                        <div class="quiz-option">
+                            <input type="radio" id="q2c" name="q2" value="incorrect">
+                            <label for="q2c">Is irrelevant; only the work performed matters</label>
+                        </div>
+                        <div class="quiz-option">
+                            <input type="radio" id="q2d" name="q2" value="incorrect">
+                            <label for="q2d">Shifts the burden of proof to the worker to prove employee status</label>
+                        </div>
+                    </div>
+                    <div class="quiz-feedback" id="feedback2"></div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 3: Economic dependence means...</h4>
+                    <div class="quiz-options">
+                        <div class="quiz-option">
+                            <input type="radio" id="q3a" name="q3" value="incorrect">
+                            <label for="q3a">The worker earns below minimum wage</label>
+                        </div>
+                        <div class="quiz-option">
+                            <input type="radio" id="q3b" name="q3" value="correct">
+                            <label for="q3b">The worker relies on one company for substantially all their income and cannot realistically work elsewhere</label>
+                        </div>
+                        <div class="quiz-option">
+                            <input type="radio" id="q3c" name="q3" value="incorrect">
+                            <label for="q3c">The worker cannot afford to quit without hardship</label>
+                        </div>
+                        <div class="quiz-option">
+                            <input type="radio" id="q3d" name="q3" value="incorrect">
+                            <label for="q3d">The company depends on the worker to complete critical tasks</label>
+                        </div>
+                    </div>
+                    <div class="quiz-feedback" id="feedback3"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="progress-bar-container">
+                <div class="progress-label">Module Progress: 1 of 4 Complete</div>
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+            </div>
+
+            <div class="nav-buttons">
+                <a href="index.html" class="nav-btn home">Home</a>
+                <a href="module2.html" class="nav-btn next">Next Module: Respondeat Superior</a>
+            </div>
+
+            <a href="https://courses.millsaps.edu/course/view.php?id=9775" class="moodle-link" target="_blank">
+                Return to Moodle Course
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        // Accordion functionality
+        const accordionItems = document.querySelectorAll('.accordion-item');
+
+        accordionItems.forEach(item => {
+            const header = item.querySelector('.accordion-header');
+            header.addEventListener('click', () => {
+                // Close other open accordions
+                accordionItems.forEach(otherItem => {
+                    if (otherItem !== item && otherItem.classList.contains('active')) {
+                        otherItem.classList.remove('active');
+                    }
+                });
+                // Toggle current accordion
+                item.classList.toggle('active');
+            });
+        });
+
+        // Classification Exercise
+        let classificationState = {};
+
+        const factButtons = document.querySelectorAll('.fact-btn');
+        factButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                const factNum = e.target.getAttribute('data-fact');
+                const indicator = e.target.getAttribute('data-indicator');
+
+                // Store classification
+                classificationState[factNum] = indicator;
+
+                // Mark button as selected
+                const card = e.target.closest('.fact-card');
+                card.querySelectorAll('.fact-btn').forEach(btn => btn.classList.remove('selected'));
+                e.target.classList.add('selected');
+
+                // Check if all facts classified
+                if (Object.keys(classificationState).length === 8) {
+                    showSummary();
+                }
+            });
+        });
+
+        function showSummary() {
+            const employeeCount = Object.values(classificationState).filter(v => v === 'employee').length;
+            const icCount = Object.values(classificationState).filter(v => v === 'ic').length;
+
+            const summaryBox = document.getElementById('summaryBox');
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            const summaryText = document.getElementById('summaryText');
+
+            scoreDisplay.textContent = `${employeeCount} Employee Indicators / ${icCount} IC Indicators`;
+
+            if (employeeCount >= 6) {
+                summaryText.innerHTML = `<strong>Strong Employee Classification:</strong> With ${employeeCount} out of 8 factors pointing to employee status, Brayden would almost certainly be classified as an employee under the economic reality test. The company should treat Brayden as an employee, provide benefits, withhold taxes, and extend employment protections. Failure to do so could result in significant back-pay claims, penalties, and damages.`;
+            } else if (employeeCount >= 4) {
+                summaryText.innerHTML = `<strong>Likely Employee Classification:</strong> With ${employeeCount} factors pointing to employee status, the weight of evidence suggests employee classification. A court would need substantial additional IC factors to reach a different conclusion. The company faces real misclassification risk.`;
+            } else {
+                summaryText.innerHTML = `<strong>Uncertain but Likely Employee:</strong> Even with only ${employeeCount} employee indicators, courts often find employee status when the relationship shows control, permanence, and economic integration. The "contract label" alone is not enough. Proceed with caution.`;
+            }
+
+            summaryBox.classList.add('show');
+            summaryBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // Quiz Functionality
+        const quizQuestions = [
+            { name: 'q1', correct: 'q1b', feedback: 'Correct! Control is the most important factor. It reveals the fundamental nature of the relationship: who is directing whom?' },
+            { name: 'q2', correct: 'q2b', feedback: 'Correct! The contract is evidence, but courts look through labels to examine actual economic reality. The facts on the ground matter most.' },
+            { name: 'q3', correct: 'q3b', feedback: 'Correct! Economic dependence is about reliance. If a worker\'s livelihood depends entirely on one company, they lose the independence that defines a true IC.' }
+        ];
+
+        quizQuestions.forEach((q, index) => {
+            const feedbackElement = document.getElementById(`feedback${index + 1}`);
+            const options = document.querySelectorAll(`input[name="${q.name}"]`);
+
+            options.forEach(option => {
+                option.addEventListener('change', (e) => {
+                    const isCorrect = e.target.id === q.correct;
+                    feedbackElement.classList.add('show');
+                    feedbackElement.classList.add(isCorrect ? 'correct' : 'incorrect');
+                    feedbackElement.classList.remove(isCorrect ? 'incorrect' : 'correct');
+                    feedbackElement.textContent = isCorrect ? 'Correct! ' + q.feedback : 'Not quite. ' + q.feedback;
+                });
+            });
+        });
+    </script>
+</body>
+</html>

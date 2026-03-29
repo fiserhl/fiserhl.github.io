@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADMN 3000 Scenario Generator | Else School of Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: #333;
+            background-color: #F8F7FC;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background-color: #21145F;
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: 0.95rem;
+            font-weight: 400;
+            opacity: 0.95;
+        }
+
+        /* Main container */
+        .container {
+            max-width: 820px;
+            margin: 3rem auto;
+            padding: 0 1rem;
+        }
+
+        /* Title and subtitle */
+        .intro {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .intro h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            color: #21145F;
+            margin-bottom: 0.75rem;
+            font-weight: 700;
+        }
+
+        .intro p {
+            font-size: 1rem;
+            color: #75787B;
+            line-height: 1.6;
+        }
+
+        /* FERPA Notice */
+        .notice-box {
+            background-color: #EBE8F4;
+            border-left: 5px solid #21145F;
+            padding: 1.5rem;
+            margin-bottom: 2.5rem;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: #333;
+        }
+
+        .notice-box strong {
+            color: #21145F;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Form styles */
+        .form-section {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 6px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+            margin-bottom: 1.5rem;
+        }
+
+        .question-group {
+            margin-bottom: 2rem;
+        }
+
+        .question-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .step-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #21145F;
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+
+        .question-label {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+
+        .question-label .required {
+            color: #E84B8A;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 0.875rem;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 0.95rem;
+            border: 1px solid #d0cdd8;
+            border-radius: 4px;
+            resize: vertical;
+            min-height: 80px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            background-color: #fafafa;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #21145F;
+            box-shadow: 0 0 0 3px rgba(33, 20, 95, 0.1);
+            background-color: white;
+        }
+
+        textarea.error {
+            border-color: #E84B8A;
+            background-color: #fff5f9;
+        }
+
+        .error-message {
+            display: none;
+            color: #E84B8A;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            font-weight: 600;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        /* Button styles */
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin: 2.5rem 0;
+        }
+
+        .btn-primary {
+            background-color: #21145F;
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background-color: #2d1b7a;
+            box-shadow: 0 4px 12px rgba(33, 20, 95, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        /* Loading state */
+        .loading-container {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .loading-container.show {
+            display: block;
+        }
+
+        .spinner {
+            border: 4px solid #EBE8F4;
+            border-top: 4px solid #21145F;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: #75787B;
+            font-size: 1rem;
+            margin-top: 1rem;
+        }
+
+        /* Result area */
+        .result-container {
+            display: none;
+            background-color: white;
+            border-radius: 6px;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .result-container.show {
+            display: block;
+        }
+
+        .result-header {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            color: #21145F;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .scenario-text {
+            color: #333;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .scenario-text strong {
+            color: #21145F;
+            font-weight: 600;
+        }
+
+        .result-warning {
+            background-color: #EBE8F4;
+            border-left: 5px solid #E84B8A;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: #333;
+        }
+
+        .result-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn-secondary {
+            background-color: white;
+            color: #21145F;
+            border: 2px solid #21145F;
+            padding: 0.75rem 1.75rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .btn-secondary:hover {
+            background-color: #21145F;
+            color: white;
+            box-shadow: 0 4px 12px rgba(33, 20, 95, 0.25);
+        }
+
+        .btn-secondary:active {
+            transform: translateY(1px);
+        }
+
+        /* Error message */
+        .error-alert {
+            display: none;
+            background-color: #fff5f9;
+            border-left: 5px solid #E84B8A;
+            padding: 1.25rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+
+        .error-alert.show {
+            display: block;
+        }
+
+        .error-alert strong {
+            color: #E84B8A;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Backup section */
+        .backup-section {
+            background-color: #EBE8F4;
+            border-radius: 6px;
+            padding: 1.75rem;
+            text-align: center;
+            margin: 2.5rem 0;
+        }
+
+        .backup-section p {
+            color: #75787B;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .backup-link {
+            display: inline-block;
+            background-color: #21145F;
+            color: white;
+            padding: 0.75rem 1.75rem;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .backup-link:hover {
+            background-color: #2d1b7a;
+            box-shadow: 0 4px 12px rgba(33, 20, 95, 0.25);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: white;
+            border-top: 1px solid #e0dce8;
+            padding: 2rem 1rem;
+            text-align: center;
+            margin-top: 3rem;
+            color: #75787B;
+            font-size: 0.9rem;
+        }
+
+        .footer a {
+            color: #21145F;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .footer a:hover {
+            color: #E84B8A;
+        }
+
+        .footer p {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer .divider {
+            color: #d0cdd8;
+            margin: 0.5rem 0;
+        }
+
+        /* Copy notification */
+        .copy-notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #21145F;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            z-index: 1000;
+            animation: slideIn 0.3s ease, slideOut 0.3s ease 2.7s;
+            pointer-events: none;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            .header, .button-container, .result-actions, .footer, .backup-section {
+                display: none;
+            }
+
+            .container {
+                margin: 0;
+                padding: 0;
+            }
+
+            .result-container {
+                box-shadow: none;
+                padding: 0;
+            }
+
+            .scenario-text {
+                color: black;
+                page-break-inside: avoid;
+            }
+
+            body {
+                background-color: white;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .intro h2 {
+                font-size: 1.8rem;
+            }
+
+            .form-section {
+                padding: 1.5rem;
+            }
+
+            .result-actions {
+                flex-direction: column;
+            }
+
+            .btn-secondary {
+                width: 100%;
+            }
+
+            .copy-notification {
+                left: 20px;
+                right: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <h1>Else School of Management</h1>
+        <p>ADMN 3000 | Legal Environment of Business</p>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Intro Section -->
+        <div class="intro">
+            <h2>Get Your Personalized Scenario</h2>
+            <p>Answer five questions. Your unique employment law scenario will be generated just for you.</p>
+        </div>
+
+        <!-- FERPA Notice -->
+        <div class="notice-box">
+            <strong>Privacy Notice:</strong>
+            This tool does not collect your name, student ID, email, or any identifying information. Only your preference answers below are sent to generate your scenario. No data is stored.
+        </div>
+
+        <!-- Error Alert -->
+        <div class="error-alert" id="errorAlert">
+            <strong>Something went wrong.</strong>
+            <p id="errorMessage">Please try again in a moment. If the problem persists, use the backup link below.</p>
+        </div>
+
+        <!-- Form -->
+        <form id="scenarioForm" class="form-section">
+            <!-- Question 1 -->
+            <div class="question-group">
+                <span class="step-label">Question 1 of 5</span>
+                <label class="question-label">What industry or career field interests you most? <span class="required">*</span></label>
+                <textarea id="q1" placeholder="e.g., sports management, healthcare technology, film production, real estate..." required></textarea>
+                <div class="error-message" id="q1Error">Please answer this question.</div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question-group">
+                <span class="step-label">Question 2 of 5</span>
+                <label class="question-label">What is a hobby, passion, or activity you genuinely enjoy outside of school? <span class="required">*</span></label>
+                <textarea id="q2" placeholder="e.g., fantasy football, hiking, painting, cooking, gaming..." required></textarea>
+                <div class="error-message" id="q2Error">Please answer this question.</div>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="question-group">
+                <span class="step-label">Question 3 of 5</span>
+                <label class="question-label">Describe your ideal workplace culture in a few words. <span class="required">*</span></label>
+                <textarea id="q3" placeholder="e.g., creative agency chaos, startup energy, corporate formal..." required></textarea>
+                <div class="error-message" id="q3Error">Please answer this question.</div>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="question-group">
+                <span class="step-label">Question 4 of 5</span>
+                <label class="question-label">Name something that genuinely annoys or frustrates you. (Keep it workplace-appropriate.) <span class="required">*</span></label>
+                <textarea id="q4" placeholder="e.g., people who are late, slow WiFi, bad coffee..." required></textarea>
+                <div class="error-message" id="q4Error">Please answer this question.</div>
+            </div>
+
+            <!-- Question 5 -->
+            <div class="question-group">
+                <span class="step-label">Question 5 of 5</span>
+                <label class="question-label">Is there anything you want included or avoided in your scenario?</label>
+                <textarea id="q5" placeholder="Leave blank if no preference."></textarea>
+            </div>
+        </form>
+
+        <!-- Generate Button -->
+        <div class="button-container">
+            <button type="submit" form="scenarioForm" class="btn-primary" id="generateBtn">Generate My Scenario</button>
+        </div>
+
+        <!-- Loading State -->
+        <div class="loading-container" id="loadingContainer">
+            <div class="spinner"></div>
+            <p class="loading-text">Generating your unique scenario...</p>
+            <p class="loading-text" style="font-size: 0.9rem; color: #999;">This may take 30-60 seconds.</p>
+        </div>
+
+        <!-- Result Container -->
+        <div class="result-container" id="resultContainer">
+            <h3 class="result-header">Your Employment Law Scenario</h3>
+            <div class="result-warning">
+                <strong>Save your scenario now.</strong> You may not be able to regenerate the exact same one.
+            </div>
+            <div class="scenario-text" id="scenarioText"></div>
+            <div class="result-actions">
+                <button class="btn-secondary" id="copyBtn">Copy to Clipboard</button>
+                <button class="btn-secondary" id="printBtn">Print / Save as PDF</button>
+            </div>
+        </div>
+
+        <!-- Backup Section -->
+        <div class="backup-section">
+            <p><strong>Having trouble?</strong> Use the backup scenario generator:</p>
+            <a href="[BACKUP_URL]" class="backup-link" target="_blank">Backup: Claude.ai Scenario Generator</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p><a href="https://courses.millsaps.edu/course/view.php?id=9775">Return to Moodle</a></p>
+        <div class="divider"></div>
+        <p>ADMN 3000 | Else School of Management | Millsaps College</p>
+    </footer>
+
+    <!-- Copy Notification -->
+    <div class="copy-notification" id="copyNotification" style="display: none;">
+        Scenario copied to clipboard!
+    </div>
+
+    <script>
+        // Configuration
+        const WORKER_URL = '[WORKER_URL]';
+
+        // DOM Elements
+        const form = document.getElementById('scenarioForm');
+        const generateBtn = document.getElementById('generateBtn');
+        const loadingContainer = document.getElementById('loadingContainer');
+        const resultContainer = document.getElementById('resultContainer');
+        const scenarioText = document.getElementById('scenarioText');
+        const copyBtn = document.getElementById('copyBtn');
+        const printBtn = document.getElementById('printBtn');
+        const errorAlert = document.getElementById('errorAlert');
+        const errorMessage = document.getElementById('errorMessage');
+
+        // Form validation
+        const requiredFields = ['q1', 'q2', 'q3', 'q4'];
+
+        function validateForm() {
+            let isValid = true;
+            const q1 = document.getElementById('q1');
+            const q2 = document.getElementById('q2');
+            const q3 = document.getElementById('q3');
+            const q4 = document.getElementById('q4');
+
+            requiredFields.forEach(fieldId => {
+                const field = document.getElementById(fieldId);
+                const errorElement = document.getElementById(fieldId + 'Error');
+
+                if (!field.value.trim()) {
+                    field.classList.add('error');
+                    errorElement.classList.add('show');
+                    isValid = false;
+                } else {
+                    field.classList.remove('error');
+                    errorElement.classList.remove('show');
+                }
+            });
+
+            return isValid;
+        }
+
+        // Clear validation on input
+        document.querySelectorAll('textarea').forEach(field => {
+            field.addEventListener('input', function() {
+                this.classList.remove('error');
+                const errorElement = document.getElementById(this.id + 'Error');
+                if (errorElement) {
+                    errorElement.classList.remove('show');
+                }
+            });
+        });
+
+        // Form submission
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            if (!validateForm()) {
+                return;
+            }
+
+            // Get form values
+            const q1 = document.getElementById('q1').value.trim();
+            const q2 = document.getElementById('q2').value.trim();
+            const q3 = document.getElementById('q3').value.trim();
+            const q4 = document.getElementById('q4').value.trim();
+            const q5 = document.getElementById('q5').value.trim();
+
+            // Show loading state
+            loadingContainer.classList.add('show');
+            resultContainer.classList.remove('show');
+            errorAlert.classList.remove('show');
+            generateBtn.disabled = true;
+
+            try {
+                // Call Worker
+                const response = await fetch(WORKER_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ q1, q2, q3, q4, q5: q5 || '' })
+                });
+
+                if (!response.ok) {
+                    throw new Error('API request failed');
+                }
+
+                const data = await response.json();
+
+                if (data.scenario) {
+                    // Format scenario text
+                    let formattedScenario = data.scenario;
+
+                    // Convert markdown-style bold markers to HTML (for display with CSS)
+                    formattedScenario = formattedScenario.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+                    // Set scenario text
+                    scenarioText.innerHTML = formattedScenario;
+
+                    // Show result
+                    loadingContainer.classList.remove('show');
+                    resultContainer.classList.add('show');
+
+                    // Scroll to result
+                    resultContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                } else {
+                    throw new Error('No scenario returned');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                loadingContainer.classList.remove('show');
+                errorAlert.classList.add('show');
+                errorMessage.textContent = error.message || 'Please try again in a moment. If the problem persists, use the backup link below.';
+            } finally {
+                generateBtn.disabled = false;
+            }
+        });
+
+        // Copy to clipboard
+        copyBtn.addEventListener('click', async () => {
+            try {
+                const text = scenarioText.innerText;
+                await navigator.clipboard.writeText(text);
+
+                // Show notification
+                const notification = document.getElementById('copyNotification');
+                notification.style.display = 'block';
+
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                }, 3000);
+            } catch (error) {
+                console.error('Copy failed:', error);
+                alert('Failed to copy. Please try again.');
+            }
+        });
+
+        // Print
+        printBtn.addEventListener('click', () => {
+            window.print();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 2: My Boss Did What? | ADMN 3000 Employment Law</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: #000000;
+            background-color: #FFFFFF;
+            line-height: 1.6;
+        }
+
+        /* Header Banner */
+        .header-banner {
+            background-color: #21145F;
+            color: #FFFFFF;
+            padding: 60px 40px;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .header-banner h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .header-banner p {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #EBE8F4;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* Section Styling */
+        section {
+            margin-bottom: 80px;
+        }
+
+        section h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            color: #21145F;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #E84B8A;
+        }
+
+        section p, section li {
+            font-size: 1.05rem;
+            color: #000000;
+            margin-bottom: 20px;
+        }
+
+        section ul {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        section li {
+            margin-bottom: 12px;
+        }
+
+        /* Callout Boxes */
+        .callout {
+            background-color: #EBE8F4;
+            border-left: 5px solid #E84B8A;
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 4px;
+        }
+
+        .callout strong {
+            color: #21145F;
+            font-weight: 700;
+        }
+
+        .callout em {
+            color: #75787B;
+        }
+
+        /* Section 1: The Doctrine */
+        .doctrine-diagram {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 40px 0;
+            padding: 40px;
+            background-color: #F5F5F5;
+            border-radius: 8px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .actor-box {
+            background-color: #E84B8A;
+            color: #FFFFFF;
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+            min-width: 150px;
+        }
+
+        .arrow {
+            font-size: 2rem;
+            color: #21145F;
+            font-weight: bold;
+        }
+
+        .liability-box {
+            background-color: #21145F;
+            color: #FFFFFF;
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            min-width: 180px;
+        }
+
+        /* Section 2: Three-Part Test Cards */
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        .card {
+            background-color: #FFFFFF;
+            border: 2px solid #21145F;
+            border-radius: 8px;
+            padding: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(33, 20, 95, 0.1);
+        }
+
+        .card:hover {
+            box-shadow: 0 6px 16px rgba(33, 20, 95, 0.2);
+            transform: translateY(-4px);
+        }
+
+        .card.active {
+            background-color: #EBE8F4;
+            border-color: #E84B8A;
+        }
+
+        .card-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            color: #E84B8A;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .card-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            color: #21145F;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .card-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .card.active .card-content {
+            max-height: 500px;
+        }
+
+        .card-content p {
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+            color: #000000;
+        }
+
+        .card-content ul {
+            margin-left: 20px;
+        }
+
+        .card-content li {
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+        }
+
+        /* Section 3: Decision Tree */
+        .decision-tree {
+            margin: 40px 0;
+            padding: 30px;
+            background-color: #F5F5F5;
+            border-radius: 8px;
+        }
+
+        .scenario {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #21145F;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #75787B;
+        }
+
+        .branches {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .branch {
+            background-color: #FFFFFF;
+            border: 2px solid #75787B;
+            border-radius: 8px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .branch:hover {
+            border-color: #E84B8A;
+            box-shadow: 0 4px 12px rgba(232, 75, 138, 0.15);
+        }
+
+        .branch-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #21145F;
+            margin-bottom: 15px;
+        }
+
+        .branch-description {
+            font-size: 0.95rem;
+            color: #75787B;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .branch-outcome {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .branch.expanded .branch-outcome {
+            max-height: 400px;
+        }
+
+        .outcome-label {
+            display: inline-block;
+            font-weight: 700;
+            padding: 8px 14px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        .outcome-detour {
+            background-color: #EBE8F4;
+            color: #21145F;
+        }
+
+        .outcome-frolic {
+            background-color: #FFE0EC;
+            color: #E84B8A;
+        }
+
+        .outcome-text {
+            font-size: 0.9rem;
+            color: #000000;
+            line-height: 1.5;
+        }
+
+        /* Section 4: IC Defense */
+        .ic-answer {
+            background-color: #21145F;
+            color: #FFFFFF;
+            padding: 35px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+
+        .ic-answer strong {
+            color: #E84B8A;
+            font-weight: 700;
+        }
+
+        .ic-answer p {
+            color: #FFFFFF;
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+        }
+
+        /* Section 5: Quick Check Quiz */
+        .quiz-container {
+            margin: 40px 0;
+        }
+
+        .question {
+            background-color: #EBE8F4;
+            border-left: 5px solid #E84B8A;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 4px;
+        }
+
+        .question-text {
+            font-weight: 600;
+            font-size: 1.05rem;
+            color: #21145F;
+            margin-bottom: 20px;
+        }
+
+        .answer-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+
+        .answer-btn {
+            background-color: #FFFFFF;
+            border: 2px solid #75787B;
+            color: #000000;
+            padding: 12px 18px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .answer-btn:hover {
+            border-color: #E84B8A;
+            background-color: #F0F0F0;
+        }
+
+        .answer-btn.correct {
+            background-color: #D4EDDA;
+            border-color: #21145F;
+            color: #21145F;
+        }
+
+        .answer-btn.incorrect {
+            background-color: #F8D7DA;
+            border-color: #E84B8A;
+            color: #E84B8A;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .feedback.show {
+            max-height: 200px;
+        }
+
+        .feedback-correct {
+            background-color: #D4EDDA;
+            color: #21145F;
+            border-left: 4px solid #21145F;
+        }
+
+        .feedback-incorrect {
+            background-color: #F8D7DA;
+            color: #E84B8A;
+            border-left: 4px solid #E84B8A;
+        }
+
+        /* Footer Navigation */
+        .footer-nav {
+            background-color: #F5F5F5;
+            padding: 40px;
+            margin-top: 80px;
+            border-top: 3px solid #21145F;
+        }
+
+        .nav-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .nav-link {
+            color: #21145F;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .nav-link:hover {
+            color: #E84B8A;
+        }
+
+        .progress {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            color: #75787B;
+            font-weight: 600;
+        }
+
+        .moodle-link {
+            background-color: #21145F;
+            color: #FFFFFF;
+            padding: 12px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        .moodle-link:hover {
+            background-color: #E84B8A;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-banner {
+                padding: 40px 20px;
+            }
+
+            .header-banner h1 {
+                font-size: 2.2rem;
+            }
+
+            .header-banner p {
+                font-size: 1.2rem;
+            }
+
+            .container {
+                padding: 0 20px;
+            }
+
+            section h2 {
+                font-size: 1.8rem;
+            }
+
+            .doctrine-diagram {
+                flex-direction: column;
+            }
+
+            .cards-container {
+                grid-template-columns: 1fr;
+            }
+
+            .branches {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .answer-options {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Accessibility */
+        button:focus, a:focus {
+            outline: 2px solid #E84B8A;
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Banner -->
+    <div class="header-banner">
+        <h1>Module 2: My Boss Did What?</h1>
+        <p>Respondeat Superior and Employer Liability</p>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Section 1: The Doctrine -->
+        <section>
+            <h2>The Doctrine</h2>
+            <p>The legal principle of <strong>respondeat superior</strong> comes from Latin meaning "let the master answer." In plain English, this doctrine holds that employers can be held liable for the wrongful acts of their employees when those acts occur within the scope of employment.</p>
+
+            <div class="callout">
+                <strong>Key Principle:</strong> An employer is vicariously liable for torts committed by its employees during the course of employment, even if the employer did not authorize or intend the wrongful conduct.
+            </div>
+
+            <div class="doctrine-diagram">
+                <div class="actor-box">Employee commits tort</div>
+                <div class="arrow">→</div>
+                <div class="liability-box">Employer is ALSO LIABLE</div>
+            </div>
+
+            <p>This means that if an employee acts negligently, commits fraud, or causes harm while working, the employer may face legal responsibility even though the employer did nothing wrong personally. This doctrine serves important policy goals: it ensures injured parties have a responsible entity to pursue for damages, and it incentivizes employers to hire carefully and manage employees responsibly.</p>
+        </section>
+
+        <!-- Section 2: Three-Part Test -->
+        <section>
+            <h2>The Three-Part Test</h2>
+            <p>Courts use a three-part test to determine whether an employer is liable under respondeat superior. Click each card to explore the elements:</p>
+
+            <div class="cards-container">
+                <div class="card" onclick="toggleCard(0)">
+                    <div class="card-number">1</div>
+                    <div class="card-title">Employment/Agency Relationship</div>
+                    <div class="card-content">
+                        <p><strong>What must be proven:</strong> The defendant must have been an employee or agent of the employer at the time of the tort.</p>
+                        <p><strong>Key questions:</strong></p>
+                        <ul>
+                            <li>Was the person actually employed by this employer?</li>
+                            <li>Did the employer have the right to control the employee's work?</li>
+                            <li>Was this a genuine employment relationship, not independent contractor status?</li>
+                        </ul>
+                        <p>This is the foundational element. Without an employment relationship, respondeat superior cannot apply.</p>
+                    </div>
+                </div>
+
+                <div class="card" onclick="toggleCard(1)">
+                    <div class="card-number">2</div>
+                    <div class="card-title">A Tort Occurred</div>
+                    <div class="card-content">
+                        <p><strong>What must be proven:</strong> The employee must have committed a tort (a civil wrong such as negligence, assault, or fraud).</p>
+                        <p><strong>Key questions:</strong></p>
+                        <ul>
+                            <li>Did the employee breach a duty of care owed to the plaintiff?</li>
+                            <li>Did that breach cause injury or damage?</li>
+                            <li>Is there a valid legal claim against the employee?</li>
+                        </ul>
+                        <p>The tort must be proven using the same standards as any other lawsuit. The employer is not liable for acts that are not themselves tortious.</p>
+                    </div>
+                </div>
+
+                <div class="card" onclick="toggleCard(2)">
+                    <div class="card-number">3</div>
+                    <div class="card-title">Within Scope of Employment</div>
+                    <div class="card-content">
+                        <p><strong>What must be proven:</strong> The tort must have occurred while the employee was acting within the scope of employment.</p>
+                        <p><strong>Key questions:</strong></p>
+                        <ul>
+                            <li>Was the employee performing duties authorized by the employer?</li>
+                            <li>Was the act of the general type the employee was hired to perform?</li>
+                            <li>Did the act occur during working hours and in the workplace (or a place the employee was authorized to be)?</li>
+                            <li>Was the wrongful act motivated, at least in part, by the desire to serve the employer?</li>
+                        </ul>
+                        <p>This is often the contested element. An employee's personal, unrelated actions outside work may fall outside the scope of employment.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Frolic vs. Detour -->
+        <section>
+            <h2>Frolic vs. Detour: A Decision Tree</h2>
+            <p>Courts distinguish between two types of employee conduct that deviate from job duties:</p>
+
+            <div class="decision-tree">
+                <div class="scenario">A delivery driver completes most deliveries. At the end of the route, the driver makes a personal stop. Is the employer liable?</div>
+
+                <div class="branches">
+                    <div class="branch" onclick="toggleBranch(0)">
+                        <div class="branch-title">Scenario A: The Detour</div>
+                        <div class="branch-description">The driver stops for gas on the route home, then continues delivering</div>
+                        <div class="branch-outcome">
+                            <span class="outcome-label outcome-detour">DETOUR: Within Scope</span>
+                            <div class="outcome-text">
+                                <p><strong>Result:</strong> The employer IS liable.</p>
+                                <p><strong>Reasoning:</strong> A detour is a minor deviation from the authorized route. The employee remains in the scope of employment because the employee has not abandoned the employment mission. The employer's obligation continues.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="branch" onclick="toggleBranch(1)">
+                        <div class="branch-title">Scenario B: The Frolic</div>
+                        <div class="branch-description">The driver drives 40 miles off-route to visit a girlfriend, then leaves work entirely</div>
+                        <div class="branch-outcome">
+                            <span class="outcome-label outcome-frolic">FROLIC: Outside Scope</span>
+                            <div class="outcome-text">
+                                <p><strong>Result:</strong> The employer is generally NOT liable.</p>
+                                <p><strong>Reasoning:</strong> A frolic is a substantial deviation where the employee pursues their own personal objective unrelated to the employer's business. The employee has abandoned the employment mission temporarily. Liability may resume only if the employee "rejoins" the employment by returning to work duties.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <strong>The Gray Area:</strong> Some cases fall in the middle. Courts look at the duration of the deviation, the distance traveled, the employee's intent, and whether the deviation was incidental to the job. Each case is fact-specific.
+            </div>
+        </section>
+
+        <!-- Section 4: The IC Defense -->
+        <section>
+            <h2>The Independent Contractor Defense</h2>
+            <p>Many employers attempt to avoid liability by classifying workers as independent contractors (ICs) rather than employees. But does this label protect them?</p>
+
+            <div class="ic-answer">
+                <p><strong>The short answer: No, not automatically.</strong></p>
+                <p>If a court determines that a worker is actually an employee based on the totality of the relationship, the IC label does not shield the employer from respondeat superior liability. <strong>A press release or contract calling someone an IC is not legally determinative.</strong></p>
+                <p>Courts apply a multi-factor control test: How much control does the employer exercise? Does the employer provide tools and training? Is the work integral to the business? Is the relationship permanent or temporary? The actual facts of the relationship matter far more than what the parties call it.</p>
+            </div>
+
+            <p>This principle has become increasingly important in the gig economy. Ride-sharing companies, delivery platforms, and other businesses have argued that their workers are ICs. But regulators and courts are scrutinizing these claims carefully. The legal question is not what a company calls someone, but whether the control and integration point to an employment relationship.</p>
+        </section>
+
+        <!-- Section 5: Quick Check Quiz -->
+        <section>
+            <h2>Quick Check: Test Your Understanding</h2>
+            <p>Answer these three questions to reinforce the key concepts:</p>
+
+            <div class="quiz-container">
+                <div class="question">
+                    <div class="question-text">Q1: What three things must be proven to hold an employer liable under respondeat superior?</div>
+                    <div class="answer-options">
+                        <button class="answer-btn" onclick="checkAnswer(0, 0)">An employment relationship, a tort occurred, and the tort was within scope</button>
+                        <button class="answer-btn" onclick="checkAnswer(0, 1)">The employer knew about the tort and approved it</button>
+                        <button class="answer-btn" onclick="checkAnswer(0, 2)">The employee was paid at the time of the tort</button>
+                        <button class="answer-btn" onclick="checkAnswer(0, 3)">The tort was committed in the workplace building</button>
+                    </div>
+                    <div class="feedback" id="feedback-0"></div>
+                </div>
+
+                <div class="question">
+                    <div class="question-text">Q2: A delivery driver is en route to complete deliveries when they run a red light and hit another car. Is the employer liable?</div>
+                    <div class="answer-options">
+                        <button class="answer-btn" onclick="checkAnswer(1, 0)">No, because the employee committed the tort alone</button>
+                        <button class="answer-btn" onclick="checkAnswer(1, 1)">Yes, likely because all three elements are met: employment, tort, and scope</button>
+                        <button class="answer-btn" onclick="checkAnswer(1, 2)">Only if the employer trained the driver poorly</button>
+                        <button class="answer-btn" onclick="checkAnswer(1, 3)">Only if a customer was in the vehicle</button>
+                    </div>
+                    <div class="feedback" id="feedback-1"></div>
+                </div>
+
+                <div class="question">
+                    <div class="question-text">Q3: A company issues a press release calling a worker an independent contractor. Is this legally determinative?</div>
+                    <div class="answer-options">
+                        <button class="answer-btn" onclick="checkAnswer(2, 0)">Yes, the press release proves IC status and shields the company</button>
+                        <button class="answer-btn" onclick="checkAnswer(2, 1)">No, courts look at the actual relationship and control, not labels</button>
+                        <button class="answer-btn" onclick="checkAnswer(2, 2)">Only if the press release includes tax documents</button>
+                        <button class="answer-btn" onclick="checkAnswer(2, 3)">It depends on whether a tort has been committed</button>
+                    </div>
+                    <div class="feedback" id="feedback-2"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer Navigation -->
+    <div class="footer-nav">
+        <div class="nav-container">
+            <a href="module1.html" class="nav-link">← Previous Module</a>
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="module3.html" class="nav-link">Next Module: Burden-Shifting →</a>
+            <span class="progress">Progress: 2/4</span>
+        </div>
+        <div style="text-align: center; margin-top: 25px; max-width: 1000px; margin-left: auto; margin-right: auto;">
+            <a href="https://courses.millsaps.edu/course/view.php?id=9775" class="moodle-link">Return to Moodle</a>
+        </div>
+    </div>
+
+    <script>
+        // Card Toggle for Three-Part Test
+        function toggleCard(index) {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, i) => {
+                if (i === index) {
+                    card.classList.toggle('active');
+                } else {
+                    card.classList.remove('active');
+                }
+            });
+        }
+
+        // Branch Toggle for Frolic vs. Detour
+        function toggleBranch(index) {
+            const branches = document.querySelectorAll('.branch');
+            branches[index].classList.toggle('expanded');
+        }
+
+        // Quiz Answer Checking
+        const correctAnswers = [0, 1, 1]; // Index of correct answers for each question
+
+        function checkAnswer(questionIndex, answerIndex) {
+            const feedbackDiv = document.getElementById(`feedback-${questionIndex}`);
+            const buttons = document.querySelectorAll(`.question:nth-child(${questionIndex + 1}) .answer-btn`);
+
+            // Remove previous feedback
+            feedbackDiv.classList.remove('show', 'feedback-correct', 'feedback-incorrect');
+            buttons.forEach(btn => btn.classList.remove('correct', 'incorrect'));
+
+            // Check answer
+            if (answerIndex === correctAnswers[questionIndex]) {
+                feedbackDiv.innerHTML = '<strong>Correct!</strong> Well done. You have a solid grasp of this concept.';
+                feedbackDiv.classList.add('show', 'feedback-correct');
+                buttons[answerIndex].classList.add('correct');
+            } else {
+                feedbackDiv.innerHTML = `<strong>Not quite.</strong> The correct answer is option ${correctAnswers[questionIndex] + 1}. Review the section above for more detail.`;
+                feedbackDiv.classList.add('show', 'feedback-incorrect');
+                buttons[answerIndex].classList.add('incorrect');
+                buttons[correctAnswers[questionIndex]].classList.add('correct');
+            }
+        }
+
+        // Smooth scroll behavior
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

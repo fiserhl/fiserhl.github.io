@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 3: The Burden Shuffle - ADMN 3000</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: #000000;
+            background-color: #FFFFFF;
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #21145F;
+            color: #FFFFFF;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        header h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            color: #EBE8F4;
+            font-weight: 600;
+        }
+
+        /* Main Container */
+        main {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Section Styles */
+        section {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid #EBE8F4;
+        }
+
+        section:last-of-type {
+            border-bottom: none;
+        }
+
+        h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            color: #21145F;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            color: #21145F;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: #000000;
+        }
+
+        /* Grid Styles */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .tile {
+            background-color: #FFFFFF;
+            border: 2px solid #21145F;
+            border-radius: 8px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .tile:hover {
+            background-color: #EBE8F4;
+            transform: translateY(-4px);
+            box-shadow: 0 4px 12px rgba(33, 20, 95, 0.15);
+        }
+
+        .tile h3 {
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .tile p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #75787B;
+        }
+
+        .tile.active {
+            background-color: #E84B8A;
+            color: #FFFFFF;
+            border-color: #E84B8A;
+        }
+
+        .tile.active p {
+            color: #FFFFFF;
+        }
+
+        .tile-content {
+            display: none;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #75787B;
+        }
+
+        .tile.expanded .tile-content {
+            display: block;
+        }
+
+        .tile.expanded .tile-title {
+            display: none;
+        }
+
+        .tile-title {
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .tile-content h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .tile-content p {
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Callout Box */
+        .callout {
+            background-color: #EBE8F4;
+            border-left: 4px solid #E84B8A;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+
+        .callout p {
+            margin: 0;
+        }
+
+        /* Burden Shift Diagram */
+        .burden-shift {
+            margin: 2rem 0;
+        }
+
+        .step-container {
+            background-color: #EBE8F4;
+            border: 2px solid #21145F;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .step-container:hover {
+            background-color: #D8D4E8;
+        }
+
+        .step-container h3 {
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: #21145F;
+            color: #FFFFFF;
+            border-radius: 50%;
+            font-weight: 700;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .step-details {
+            display: none;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #75787B;
+        }
+
+        .step-container.expanded .step-details {
+            display: block;
+        }
+
+        .step-container.expanded .step-title {
+            display: none;
+        }
+
+        .step-title {
+            flex: 1;
+        }
+
+        .arrow {
+            text-align: center;
+            color: #21145F;
+            font-size: 1.5rem;
+            margin: 0.5rem 0;
+        }
+
+        /* Checklist Styles */
+        .checklist {
+            margin: 1.5rem 0;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background-color: #FFFFFF;
+            border: 1px solid #75787B;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .checklist-item:hover {
+            background-color: #EBE8F4;
+        }
+
+        .checklist-item input[type="checkbox"] {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            accent-color: #E84B8A;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .checklist-item label {
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .checklist-item.checked label {
+            color: #75787B;
+            text-decoration: line-through;
+        }
+
+        .success-message {
+            display: none;
+            background-color: #EBE8F4;
+            border: 2px solid #E84B8A;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+            text-align: center;
+            font-weight: 600;
+            color: #E84B8A;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Drag/Sort Container */
+        .sort-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .sort-bin {
+            background-color: #EBE8F4;
+            border: 2px dashed #21145F;
+            border-radius: 8px;
+            padding: 1.5rem;
+            min-height: 300px;
+        }
+
+        .sort-bin h3 {
+            margin-top: 0;
+            text-align: center;
+            color: #21145F;
+        }
+
+        .sort-card {
+            background-color: #FFFFFF;
+            border: 1px solid #75787B;
+            border-radius: 4px;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+
+        .sort-card:hover {
+            box-shadow: 0 2px 8px rgba(33, 20, 95, 0.2);
+        }
+
+        .sort-card.placed {
+            opacity: 0.5;
+        }
+
+        /* Flip Card Styles */
+        .flip-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .flip-card {
+            height: 200px;
+            cursor: pointer;
+            perspective: 1000px;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .flip-card-front {
+            background-color: #21145F;
+            color: #FFFFFF;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .flip-card-back {
+            background-color: #EBE8F4;
+            color: #000000;
+            transform: rotateY(180deg);
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .evidence-label {
+            font-weight: 700;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .evidence-strong {
+            background-color: #E84B8A;
+            color: #FFFFFF;
+        }
+
+        .evidence-weak {
+            background-color: #75787B;
+            color: #FFFFFF;
+        }
+
+        .evidence-neutral {
+            background-color: #21145F;
+            color: #FFFFFF;
+        }
+
+        /* Quiz Styles */
+        .quiz-container {
+            background-color: #EBE8F4;
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+
+        .quiz-question {
+            margin-bottom: 2rem;
+        }
+
+        .quiz-question h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            color: #21145F;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .quiz-options {
+            display: grid;
+            gap: 0.5rem;
+        }
+
+        .quiz-option {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background-color: #FFFFFF;
+            border: 1px solid #75787B;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            background-color: #EBE8F4;
+            border-color: #E84B8A;
+        }
+
+        .quiz-option input[type="radio"] {
+            cursor: pointer;
+            accent-color: #E84B8A;
+        }
+
+        .quiz-feedback {
+            display: none;
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .quiz-feedback.correct {
+            background-color: #E84B8A;
+            color: #FFFFFF;
+            display: block;
+        }
+
+        .quiz-feedback.incorrect {
+            background-color: #75787B;
+            color: #FFFFFF;
+            display: block;
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #EBE8F4;
+            padding: 2rem;
+            text-align: center;
+            border-top: 2px solid #21145F;
+            margin-top: 3rem;
+        }
+
+        .footer-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .nav-link {
+            color: #21145F;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border: 2px solid #21145F;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background-color: #21145F;
+            color: #FFFFFF;
+        }
+
+        .progress {
+            font-weight: 600;
+            color: #21145F;
+        }
+
+        .moodle-link {
+            display: inline-block;
+            color: #FFFFFF;
+            background-color: #E84B8A;
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .moodle-link:hover {
+            background-color: #21145F;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .sort-container {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-nav {
+                flex-direction: column;
+            }
+
+            main {
+                padding: 1rem;
+            }
+
+            .flip-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Module 3: The Burden Shuffle</h1>
+        <p>The McDonnell Douglas Burden-Shifting Framework</p>
+    </header>
+
+    <main>
+        <!-- Section 1: Protected Classes -->
+        <section id="protected-classes">
+            <h2>Section 1: Title VII Protected Classes</h2>
+            <p>Title VII of the Civil Rights Act of 1964 protects employees from discrimination based on five core characteristics. Click each class to learn more.</p>
+
+            <h3>Title VII Core Classes</h3>
+            <div class="grid">
+                <div class="tile" data-class="race">
+                    <div class="tile-title"><strong>Race</strong></div>
+                    <div class="tile-content">
+                        <h4>Title VII, Section 703</h4>
+                        <p><strong>Statute:</strong> 42 U.S.C. 2000e-2</p>
+                        <p><strong>Coverage:</strong> Applies to all races, including white employees and mixed-race individuals.</p>
+                        <p><strong>Examples:</strong> Discrimination based on skin tone, racial stereotypes, or ethnic accent.</p>
+                    </div>
+                </div>
+
+                <div class="tile" data-class="color">
+                    <div class="tile-title"><strong>Color</strong></div>
+                    <div class="tile-content">
+                        <h4>Title VII, Section 703</h4>
+                        <p><strong>Statute:</strong> 42 U.S.C. 2000e-2</p>
+                        <p><strong>Coverage:</strong> Distinct from race; protects individuals based on shade or tone of skin.</p>
+                        <p><strong>Examples:</strong> Light-skinned vs. dark-skinned employees, colorism within the same racial group.</p>
+                    </div>
+                </div>
+
+                <div class="tile" data-class="religion">
+                    <div class="tile-title"><strong>Religion</strong></div>
+                    <div class="tile-content">
+                        <h4>Title VII, Section 703</h4>
+                        <p><strong>Statute:</strong> 42 U.S.C. 2000e-2</p>
+                        <p><strong>Coverage:</strong> All religions and sincerely held religious beliefs; includes atheism.</p>
+                        <p><strong>Examples:</strong> Refusal of accommodations for sabbath, prayer, or religious dress.</p>
+                    </div>
+                </div>
+
+                <div class="tile" data-class="sex">
+                    <div class="tile-title"><strong>Sex</strong></div>
+                    <div class="tile-content">
+                        <h4>Title VII, Section 703</h4>
+                        <p><strong>Statute:</strong> 42 U.S.C. 2000e-2</p>
+                        <p><strong>Coverage:</strong> Sex, sexual orientation, gender identity, pregnancy (after PDA amendment).</p>
+                        <p><strong>Examples:</strong> Gender stereotyping, pregnancy discrimination, unequal pay.</p>
+                    </div>
+                </div>
+
+                <div class="tile" data-class="national-origin">
+                    <div class="tile-title"><strong>National Origin</strong></div>
+                    <div class="tile-content">
+                        <h4>Title VII, Section 703</h4>
+                        <p><strong>Statute:</strong> 42 U.S.C. 2000e-2</p>
+                        <p><strong>Coverage:</strong> Country of origin, accent, ethnic association, language.</p>
+                        <p><strong>Examples:</strong> English-only policies, accent-based termination, citizenship discrimination.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Additional Protected Classes</h3>
+            <div class="grid">
+                <div class="tile" data-class="age">
+                    <div class="tile-title"><strong>Age (ADEA)</strong></div>
+                    <div class="tile-content">
+                        <h4>Age Discrimination in Employment Act of 1967</h4>
+                        <p><strong>Statute:</strong> 29 U.S.C. 621 et seq.</p>
+                        <p><strong>Coverage:</strong> Employees 40 years old and older.</p>
+                        <p><strong>Examples:</strong> Failure to hire older workers, replacement by younger workers, age-based comments.</p>
+                    </div>
+                </div>
+
+                <div class="tile" data-class="disability">
+                    <div class="tile-title"><strong>Disability (ADA)</strong></div>
+                    <div class="tile-content">
+                        <h4>Americans with Disabilities Act of 1990</h4>
+                        <p><strong>Statute:</strong> 42 U.S.C. 12101 et seq.</p>
+                        <p><strong>Coverage:</strong> Physical or mental impairments that substantially limit major life activities.</p>
+                        <p><strong>Examples:</strong> Refusal of accommodations, disability-based stereotyping, failure to hire due to disability.</p>
+                    </div>
+                </div>
+
+                <div class="tile" data-class="pregnancy">
+                    <div class="tile-title"><strong>Pregnancy (PDA)</strong></div>
+                    <div class="tile-content">
+                        <h4>Pregnancy Discrimination Act of 1978</h4>
+                        <p><strong>Statute:</strong> 42 U.S.C. 2000e(k)</p>
+                        <p><strong>Coverage:</strong> Pregnancy, childbirth, and related medical conditions.</p>
+                        <p><strong>Examples:</strong> Termination upon pregnancy disclosure, denial of promotion due to childbearing plans.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Three-Step Burden Shift -->
+        <section id="burden-shift">
+            <h2>Section 2: The Three-Step Burden Shift</h2>
+            <p>McDonnell Douglas established a framework for discrimination cases. The burden of proof shifts between the employee and employer through three stages. Click each step to learn more.</p>
+
+            <div class="burden-shift">
+                <div class="step-container" data-step="1">
+                    <h3>
+                        <span class="step-number">1</span>
+                        <span class="step-title">Employee Establishes Prima Facie Case</span>
+                    </h3>
+                    <div class="step-details">
+                        <p><strong>Who:</strong> EMPLOYEE</p>
+                        <p><strong>Burden:</strong> Preponderance of the evidence (more likely than not)</p>
+                        <p><strong>What:</strong> The employee must establish four elements:</p>
+                        <ul style="margin-left: 2rem; margin-bottom: 1rem;">
+                            <li>Membership in a protected class</li>
+                            <li>Qualified to perform the job</li>
+                            <li>Suffered an adverse employment action</li>
+                            <li>Comparator: a similarly situated non-protected employee treated better</li>
+                        </ul>
+                        <p><strong>Outcome:</strong> If the employee proves all four, the employer's motivation is now suspect. The case proceeds to Step 2.</p>
+                    </div>
+                </div>
+
+                <div class="arrow">↓</div>
+
+                <div class="step-container" data-step="2">
+                    <h3>
+                        <span class="step-number">2</span>
+                        <span class="step-title">Employer Articulates Legitimate Nondiscriminatory Reason</span>
+                    </h3>
+                    <div class="step-details">
+                        <p><strong>Who:</strong> EMPLOYER</p>
+                        <p><strong>Burden:</strong> Production only (articulate a reason, not prove it)</p>
+                        <p><strong>What:</strong> The employer states a business reason for the adverse action that is unrelated to the protected class.</p>
+                        <p><strong>Examples of Valid LNRs:</strong> documented poor performance, lawful restructuring, legitimate budget cuts, lack of required qualification.</p>
+                        <p><strong>Outcome:</strong> If the employer articulates an LNR, the case proceeds to Step 3. This is a low bar—the employer does not yet need to prove the reason.</p>
+                    </div>
+                </div>
+
+                <div class="arrow">↓</div>
+
+                <div class="step-container" data-step="3">
+                    <h3>
+                        <span class="step-number">3</span>
+                        <span class="step-title">Employee Proves Pretext</span>
+                    </h3>
+                    <div class="step-details">
+                        <p><strong>Who:</strong> EMPLOYEE</p>
+                        <p><strong>Burden:</strong> Preponderance of the evidence (clear and convincing)</p>
+                        <p><strong>What:</strong> The employee must show that the employer's stated reason is not the true reason—it is a pretext for discrimination.</p>
+                        <p><strong>Evidence of Pretext:</strong> Inconsistent application of policy, shift in stated reasons, disparate treatment of comparators, statements by decision-makers about protected class.</p>
+                        <p><strong>Outcome:</strong> If the employee proves pretext, discrimination is presumed, and the employer loses.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <strong>Key Principle:</strong> The burden shifts back and forth. The employee and employer share the burden of proof, but at different steps. The case does not end unless one party fails to meet their burden or the employee proves pretext.
+            </div>
+        </section>
+
+        <!-- Section 3: Prima Facie Case -->
+        <section id="prima-facie">
+            <h2>Section 3: Step 1 - The Prima Facie Case</h2>
+            <p>An employee must prove four elements to establish a prima facie case of discrimination. Check off each element as you apply it to the scenario below.</p>
+
+            <h3>Scenario:</h3>
+            <div class="callout">
+                <p><strong>Maria, a Latina woman with 10 years of experience in marketing, was passed over for promotion to Senior Manager in favor of a less experienced white male colleague. The company cited "better overall fit for the team culture."</strong></p>
+            </div>
+
+            <h3>Prima Facie Elements:</h3>
+            <div class="checklist">
+                <div class="checklist-item">
+                    <input type="checkbox" id="element1" data-element="1">
+                    <label for="element1">
+                        <strong>Protected Class:</strong> Maria is a Latina woman (protected by Title VII—race/color and national origin)
+                    </label>
+                </div>
+
+                <div class="checklist-item">
+                    <input type="checkbox" id="element2" data-element="2">
+                    <label for="element2">
+                        <strong>Qualified:</strong> Maria has 10 years of marketing experience and clear qualifications for the Senior Manager role
+                    </label>
+                </div>
+
+                <div class="checklist-item">
+                    <input type="checkbox" id="element3" data-element="3">
+                    <label for="element3">
+                        <strong>Adverse Action:</strong> Maria was not promoted; this is a material adverse action (loss of opportunity and compensation)
+                    </label>
+                </div>
+
+                <div class="checklist-item">
+                    <input type="checkbox" id="element4" data-element="4">
+                    <label for="element4">
+                        <strong>Comparator:</strong> The white male colleague was less experienced but received the promotion, and they are similarly situated in role, department, and job requirements
+                    </label>
+                </div>
+            </div>
+
+            <div class="success-message" id="prima-facie-success">
+                <p>Prima Facie Case Established! All four elements are proven. Maria can proceed to Step 2.</p>
+            </div>
+        </section>
+
+        <!-- Section 4: LNR -->
+        <section id="lnr">
+            <h2>Section 4: Step 2 - The Legitimate Nondiscriminatory Reason</h2>
+            <p>At Step 2, the employer must articulate a business reason for the adverse action. Some reasons are valid LNRs; others are thinly-veiled pretext. Click each reason to categorize it as a "Valid LNR" or "Likely Pretext."</p>
+
+            <div class="sort-container">
+                <div>
+                    <h3>Reasons to Categorize:</h3>
+                    <div id="unsorted-reasons">
+                        <div class="sort-card" data-reason="performance">
+                            <strong>Documented poor performance reviews for past 2 years</strong>
+                        </div>
+                        <div class="sort-card" data-reason="culture">
+                            <strong>Doesn't fit our vintage vibe and culture</strong>
+                        </div>
+                        <div class="sort-card" data-reason="budget">
+                            <strong>Department budget cuts required downsizing</strong>
+                        </div>
+                        <div class="sort-card" data-reason="bad-vibe">
+                            <strong>Bad energy during the team meeting</strong>
+                        </div>
+                        <div class="sort-card" data-reason="credential">
+                            <strong>Lacks the MBA required for the role</strong>
+                        </div>
+                        <div class="sort-card" data-reason="unsupported">
+                            <strong>Low scores, no documentation provided</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    <div class="sort-bin" id="valid-lnr">
+                        <h3>Valid LNRs</h3>
+                    </div>
+                    <div class="sort-bin" id="likely-pretext">
+                        <h3>Likely Pretext</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div id="lnr-feedback" style="display: none; margin-top: 2rem; padding: 1.5rem; background-color: #EBE8F4; border-radius: 8px;">
+                <h4 style="color: #21145F; margin-bottom: 1rem;">Feedback:</h4>
+                <p id="lnr-feedback-text"></p>
+            </div>
+        </section>
+
+        <!-- Section 5: Pretext Evidence -->
+        <section id="pretext">
+            <h2>Section 5: Step 3 - Pretext Evidence</h2>
+            <p>At Step 3, the employee must prove the employer's stated reason is false. The strength of pretext evidence varies. Click each card to reveal the evidence and assessment.</p>
+
+            <div class="flip-container">
+                <div class="flip-card" data-evidence="1">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <span>Evidence #1: Text Message</span>
+                        </div>
+                        <div class="flip-card-back">
+                            <p><strong>Decision-maker's text:</strong> "Her energy is vintage. We need fresh perspectives."</p>
+                            <div class="evidence-label evidence-strong">STRONG PRETEXT</div>
+                            <p style="font-size: 0.9rem;">Direct statement about age (62) creates strong evidence the stated reason is pretextual.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card" data-evidence="2">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <span>Evidence #2: Hired Younger Worker</span>
+                        </div>
+                        <div class="flip-card-back">
+                            <p><strong>Finding:</strong> Different department hired younger person for similar role same month.</p>
+                            <div class="evidence-label evidence-weak">WEAK ALONE</div>
+                            <p style="font-size: 0.9rem;">Stronger with other evidence. Alone, it's circumstantial.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card" data-evidence="3">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <span>Evidence #3: Comparator Qualifications</span>
+                        </div>
+                        <div class="flip-card-back">
+                            <p><strong>Comparator:</strong> Selected candidate has significantly lower qualifications (2 years vs. 10 years experience).</p>
+                            <div class="evidence-label evidence-strong">STRONG PRETEXT</div>
+                            <p style="font-size: 0.9rem;">Clear disparity contradicts stated reason of qualifications. Shows inconsistent standards.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card" data-evidence="4">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <span>Evidence #4: Company Policy</span>
+                        </div>
+                        <div class="flip-card-back">
+                            <p><strong>Finding:</strong> Company has a published non-discrimination policy.</p>
+                            <div class="evidence-label evidence-neutral">NEUTRAL</div>
+                            <p style="font-size: 0.9rem;">A policy alone neither supports nor defeats a discrimination claim. It shows intent but not practice.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card" data-evidence="5">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <span>Evidence #5: Interview Notes</span>
+                        </div>
+                        <div class="flip-card-back">
+                            <p><strong>Finding:</strong> Decision-maker asked about religion during initial interview, which is prohibited.</p>
+                            <div class="evidence-label evidence-strong">STRONG PRETEXT</div>
+                            <p style="font-size: 0.9rem;">Illegal inquiry signals discriminatory intent and suggests decision-maker knew discrimination was wrong.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <strong>Pretext Patterns:</strong> Courts look for evidence that the employer lied or applied rules inconsistently. Strong pretext evidence includes: statements by decision-makers about protected class, selective enforcement of policies, shift in stated reasons, hiring candidates with lower qualifications.
+            </div>
+        </section>
+
+        <!-- Section 6: Quick Check Quiz -->
+        <section id="quiz">
+            <h2>Section 6: Quick Check</h2>
+            <p>Test your understanding of the McDonnell Douglas framework with these four questions. Select your answer and check the feedback.</p>
+
+            <div class="quiz-container">
+                <div class="quiz-question">
+                    <h4>Question 1: What four elements must an employee prove in a prima facie case?</h4>
+                    <div class="quiz-options">
+                        <label class="quiz-option">
+                            <input type="radio" name="q1" value="a">
+                            <span>Protected class, qualified, adverse action, comparator</span>
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q1" value="b">
+                            <span>Protected class, employed for 1 year, fired, younger replacement</span>
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q1" value="c">
+                            <span>Protected class, manager bias, lower pay, retaliation</span>
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q1" value="d">
+                            <span>Age over 40, qualified, denied promotion, no documentation</span>
+                        </label>
+                    </div>
+                    <div class="quiz-feedback correct"></div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 2: At Step 2, what burden does the employer have?</h4>
+                    <div class="quiz-options">
+                        <label class="quiz-option">
+                            <input type="radio" name="q2" value="a">
+                            <span>Prove the reason is true (burden of persuasion)</span>
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q2" value="b">
+                            <span>Produce a legitimate nondiscriminatory reason (burden of production)</span>
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q2" value="c">
+                            <span>Show clear and convincing evidence of nondiscrimination</span>
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q2" value="d">
+                            <span>Provide written documentation of all employment decisions</span>
+                        </label>
+                    </div>
+                    <div class="quiz-feedback correct"></div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 3: Which of the following is the strongest evidence of pretext?</h4>
+                    <div class="quiz-options">
+                        <label class="quiz-option">
+                            <input type="radio" name="q3" value="a">
+                            <span>A company policy against discrimination</span>
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q3" value="b">
+                            <span>A decision-maker's statement about the protected class + hiring a less qualified comparator</span>
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q3" value="c">
+                            <span>A different department hired someone younger the same year</span>
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q3" value="d">
+                            <span>The employer couldn't provide documentation of the decision</span>
+                        </label>
+                    </div>
+                    <div class="quiz-feedback correct"></div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 4: The Age Discrimination in Employment Act (ADEA) protects employees who are:</h4>
+                    <div class="quiz-options">
+                        <label class="quiz-option">
+                            <input type="radio" name="q4" value="a">
+                            <span>35 years old or older</span>
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q4" value="b">
+                            <span>Retired or on disability</span>
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q4" value="c">
+                            <span>40 years old or older</span>
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q4" value="d">
+                            <span>50 years old or older</span>
+                        </label>
+                    </div>
+                    <div class="quiz-feedback correct"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-nav">
+            <a href="module2.html" class="nav-link">Previous: Respondeat Superior</a>
+            <span class="progress">Progress: 3/4</span>
+            <a href="module4.html" class="nav-link">Next Module: Ethics</a>
+        </div>
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="https://courses.millsaps.edu/course/view.php?id=9775" class="moodle-link">Return to Moodle</a>
+    </footer>
+
+    <script>
+        // Section 1: Protected Classes Toggle
+        document.querySelectorAll('[data-class]').forEach(tile => {
+            tile.addEventListener('click', function() {
+                this.classList.toggle('expanded');
+            });
+        });
+
+        // Section 2: Burden Shift Steps Toggle
+        document.querySelectorAll('[data-step]').forEach(step => {
+            step.addEventListener('click', function() {
+                this.classList.toggle('expanded');
+            });
+        });
+
+        // Section 3: Prima Facie Checklist
+        document.querySelectorAll('.checklist-item input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const parent = this.closest('.checklist-item');
+                if (this.checked) {
+                    parent.classList.add('checked');
+                } else {
+                    parent.classList.remove('checked');
+                }
+                checkPriaFaciComplete();
+            });
+        });
+
+        function checkPriaFaciComplete() {
+            const allChecked = document.querySelectorAll('.checklist-item input[type="checkbox"]');
+            const checked = document.querySelectorAll('.checklist-item input[type="checkbox"]:checked');
+            if (allChecked.length === checked.length && allChecked.length > 0) {
+                document.getElementById('prima-facie-success').classList.add('show');
+            } else {
+                document.getElementById('prima-facie-success').classList.remove('show');
+            }
+        }
+
+        // Section 4: LNR Drag and Sort
+        const reasonCards = document.querySelectorAll('.sort-card');
+        const validLnrBin = document.getElementById('valid-lnr');
+        const pretextBin = document.getElementById('likely-pretext');
+
+        const validReasons = ['performance', 'budget', 'credential'];
+        const pretextReasons = ['culture', 'bad-vibe', 'unsupported'];
+
+        reasonCards.forEach(card => {
+            card.addEventListener('click', function() {
+                const reason = this.getAttribute('data-reason');
+
+                if (validReasons.includes(reason)) {
+                    validLnrBin.appendChild(this);
+                } else if (pretextReasons.includes(reason)) {
+                    pretextBin.appendChild(this);
+                }
+
+                this.classList.add('placed');
+                checkLnrComplete();
+            });
+        });
+
+        function checkLnrComplete() {
+            const placed = document.querySelectorAll('.sort-card.placed');
+            if (placed.length === 6) {
+                showLnrFeedback();
+            }
+        }
+
+        function showLnrFeedback() {
+            const feedback = document.getElementById('lnr-feedback');
+            const feedbackText = document.getElementById('lnr-feedback-text');
+
+            const validCount = document.querySelectorAll('#valid-lnr .sort-card').length;
+            const pretextCount = document.querySelectorAll('#likely-pretext .sort-card').length;
+
+            if (validCount === 3 && pretextCount === 3) {
+                feedbackText.textContent = 'Perfect! You correctly identified valid LNRs (documented performance, budget cuts, required credentials) versus pretext reasons (cultural fit, vague "bad vibe," unsupported claims).';
+            } else {
+                feedbackText.textContent = 'Review your categorization. Valid LNRs are objective, documented business reasons. Pretext reasons are vague, subjective, or lack documentation.';
+            }
+            feedback.style.display = 'block';
+        }
+
+        // Section 5: Flip Cards
+        document.querySelectorAll('.flip-card').forEach(card => {
+            card.addEventListener('click', function() {
+                this.classList.toggle('flipped');
+            });
+        });
+
+        // Section 6: Quiz
+        const quizAnswers = {
+            q1: 'a',
+            q2: 'b',
+            q3: 'b',
+            q4: 'c'
+        };
+
+        document.querySelectorAll('input[type="radio"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                const questionName = this.name;
+                const question = this.closest('.quiz-question');
+                const feedback = question.querySelector('.quiz-feedback');
+                const isCorrect = this.value === quizAnswers[questionName];
+
+                feedback.textContent = isCorrect ? 'Correct!' : 'Not quite. Review the module content above.';
+                feedback.className = 'quiz-feedback ' + (isCorrect ? 'correct' : 'incorrect');
+            });
+        });
+    </script>
+</body>
+</html>
