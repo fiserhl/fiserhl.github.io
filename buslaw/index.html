@@ -771,6 +771,7 @@ function resumeSession() {
       .replace(/\[STAGE:\d\]/g, '')
       .replace(/\[ADVANCE\]/g, '')
       .replace(/\[DOC_UPDATE:[^\]]+\]/g, '')
+      .replace(/^DOC_UPDATE:\S+=.+$/gm, '')
       .replace(/\[CHOICES:.+?\]/g, '')
       .trim();
     if (!content) return;
@@ -847,9 +848,12 @@ function addMessage(role, rawContent) {
 
   const docUpdates = [];
   const docRx = /\[DOC_UPDATE:([^\]=]+)=([^\]]+)\]/g;
+  const docRxNoBracket = /^DOC_UPDATE:(\S+?)=(.+)$/gm;
   let m;
   while ((m = docRx.exec(content)) !== null) docUpdates.push({ field: m[1].trim(), value: m[2].trim() });
+  while ((m = docRxNoBracket.exec(content)) !== null) docUpdates.push({ field: m[1].trim(), value: m[2].trim() });
   content = content.replace(/\[DOC_UPDATE:[^\]]+\]/g, '');
+  content = content.replace(/^DOC_UPDATE:\S+=.+$/gm, '');
 
   let choices = [];
   const cMatch = content.match(/\[CHOICES:\s*(.+?)\]/);
@@ -976,7 +980,8 @@ async function callTutor() {
   const msgs = conversationHistory.map(m => ({
     role: m.role,
     content: m.content.replace(/\[STAGE:\d\]/g, '').replace(/\[ADVANCE\]/g, '')
-      .replace(/\[DOC_UPDATE:[^\]]+\]/g, '').replace(/\[CHOICES:.+?\]/g, '').trim()
+      .replace(/\[DOC_UPDATE:[^\]]+\]/g, '').replace(/^DOC_UPDATE:\S+=.+$/gm, '')
+      .replace(/\[CHOICES:.+?\]/g, '').trim()
   })).filter(m => m.content);
 
   const recent = msgs.slice(-50);
@@ -1191,7 +1196,8 @@ function downloadTranscript() {
     const role = m.role === 'assistant' ? 'TUTOR' : 'STUDENT';
     const content = m.content
       .replace(/\[STAGE:\d\]/g, '').replace(/\[ADVANCE\]/g, '')
-      .replace(/\[DOC_UPDATE:[^\]]+\]/g, '').replace(/\[CHOICES:.+?\]/g, '').trim();
+      .replace(/\[DOC_UPDATE:[^\]]+\]/g, '').replace(/^DOC_UPDATE:\S+=.+$/gm, '')
+      .replace(/\[CHOICES:.+?\]/g, '').trim();
     return `[${role}]\n${content}\n`;
   });
 
