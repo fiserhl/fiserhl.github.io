@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Else School Business Builder</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -554,22 +555,24 @@ FORCE REALIZATION: "Can a sole proprietorship have two owners?" → bridge to pa
 GATE: Student articulates why sole prop won't work with a co-founder AND explains personal liability.
 
 ### Stage 2: General Partnership [STAGE:2]
+Reference the **Uniform Partnership Act (UPA)** and **Revised Uniform Partnership Act (RUPA)** naturally when explaining default rules.
 Cover with INTERACTIVE NEGOTIATION:
-- **Formation** — can form without paperwork (and why that's dangerous)
-- **Joint and several liability** — "co-founder signs $50K lease without telling you. Who pays?"
-- **Fiduciary duties** — loyalty, care. What if co-founder starts competing side business?
-- **Authority to bind** — each partner can make binding deals
+- **Formation** — can form without paperwork (and why that's dangerous). Under RUPA, a partnership forms automatically when two people co-own a business for profit.
+- **Joint and several liability** — "co-founder signs $50K lease without telling you. Who pays?" Reference that the UPA makes each partner personally liable for ALL partnership obligations.
+- **Fiduciary duties** — loyalty, care. What if co-founder starts competing side business? RUPA codifies these duties.
+- **Authority to bind** — each partner can make binding deals (UPA: every partner is an agent of the partnership)
 - **Ownership split** — FORCE decision with reasoning. No default right answer.
-- **Voting and control** — "You want to expand, co-founder doesn't. Deadlock?"
-- **Dissolution** — partner wants out, dies, goes bankrupt. Can they force shutdown?
+- **Voting and control** — "You want to expand, co-founder doesn't. Deadlock?" Under RUPA, default is equal management rights regardless of ownership %.
+- **Dissolution** — partner wants out, dies, goes bankrupt. Can they force shutdown? RUPA distinguishes between dissociation and dissolution.
 - **Pass-through taxation**
 GATE: Explain joint and several liability, propose ownership split with reasoning, explain dissolution.
 
 ### Stage 3: Limited Partnership [STAGE:3]
+Reference the **Uniform Limited Partnership Act (ULPA)** and **Revised ULPA (RULPA)** naturally.
 Cover:
 - **GP vs LP distinction** — GP manages + unlimited liability. LP invests + limited liability.
-- **Management participation trap** — LP loses protection if they participate in management
-- **RULPA/ULPA** — requires filing (unlike GP)
+- **Management participation trap** — under ULPA, LP loses liability protection if they participate in control of the business. This is the "control rule."
+- **Filing requirement** — unlike general partnerships, LPs require filing a certificate with the state (ULPA requirement)
 - **When LPs make sense** — investor who wants returns without day-to-day involvement
 - **Apply to their business** — who would be GP vs LP? Does it fit?
 GATE: Explain GP/LP distinction, management participation risk, whether LP fits their business.
@@ -591,6 +594,9 @@ GATE: Explain how LLC differs from partnership re: liability, discuss operating 
 Press HARD on reasoning. Make them address trade-offs. What are they giving up?
 Emit [DOC_UPDATE:final_entity=choice] and [DOC_UPDATE:final_reasoning=summary].
 Then tell them to click "Finalize & Download."
+
+## LEGAL AUTHORITY
+When teaching concepts — especially in the partnership and LP stages — naturally reference the real law behind what you're saying: the **Uniform Partnership Act (UPA)**, the **Revised Uniform Partnership Act (RUPA)**, the **Uniform Limited Partnership Act (ULPA)**, and the **Revised Uniform Limited Liability Company Act (RULLCA)** where relevant. Don't lecture or cite section numbers — just weave it in conversationally so students understand there's actual law governing these rules, not just your opinion. For example: "Under the Uniform Partnership Act, every partner has equal rights in management — that's not a suggestion, it's the default law" or "The ULPA says limited partners lose their liability shield if they participate in control." Keep it natural, not academic.
 
 ## PERSONALITY
 Mentor, not professor. Young attorney who loves this stuff. Use co-founder's name often. Create drama and stakes. Celebrate good reasoning. Challenge lazy answers.
@@ -1164,7 +1170,7 @@ function openMemo() {
 function closeMemo() { document.getElementById('memoOverlay').classList.remove('visible'); }
 
 function downloadMemo() {
-  const companyName = document.getElementById('docCompanyName').textContent;
+  const companyName = document.getElementById('docCompanyName').textContent || 'Company';
   const reasoning = document.getElementById('memoReasoning')?.value || '';
   const rejected = document.getElementById('memoRejected')?.value || '';
   const cofounder = document.getElementById('memoCofounder')?.value || '';
@@ -1173,96 +1179,270 @@ function downloadMemo() {
   if (!reasoning.trim()) { alert('Please complete the reasoning section.'); return; }
   if (!rejected.trim()) { alert('Please complete the rejected entities section.'); return; }
 
-  let docSummary = '';
+  let docFields = [];
   document.querySelectorAll('.doc-field').forEach(f => {
     const label = f.querySelector('.doc-label').textContent;
     const val = f.querySelector('.doc-value').textContent;
-    if (val !== 'Waiting...') docSummary += `  ${label}: ${val}\n`;
+    if (val !== 'Waiting...') docFields.push({ label, val });
   });
 
   const date = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
   const entity = docValues.final_entity || 'Not specified';
 
-  const memo = `
-╔══════════════════════════════════════════════════════════════╗
-║                                                              ║
-║   ${companyName.toUpperCase().padEnd(56)}   ║
-║   Entity Choice Memorandum                                   ║
-║   ${entity.padEnd(56)}   ║
-║                                                              ║
-╚══════════════════════════════════════════════════════════════╝
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: 'mm', format: 'letter' });
 
-  Else School of Management | Millsaps College
-  Business Law | ${date}
+  const pageW = doc.internal.pageSize.getWidth();
+  const pageH = doc.internal.pageSize.getHeight();
+  const margin = 22;
+  const contentW = pageW - (margin * 2);
 
-════════════════════════════════════════════════════════════════
+  // Brand colors [R, G, B]
+  const PURPLE   = [33, 20, 95];
+  const LAVENDER = [235, 232, 244];
+  const GRAY     = [117, 120, 123];
+  const PINK     = [232, 75, 138];
+  const WHITE    = [255, 255, 255];
+  const TEXT     = [26, 26, 46];
 
-SECTION 1: COMPANY FORMATION DOCUMENT
-────────────────────────────────────────
-${docSummary}
+  let y = 0;
 
-════════════════════════════════════════════════════════════════
+  // ── HEADER BANNER (purple) ───────────────────────────────────────
+  doc.setFillColor(...PURPLE);
+  doc.rect(0, 0, pageW, 52, 'F');
+  // Pink left accent bar
+  doc.setFillColor(...PINK);
+  doc.rect(0, 0, 5, 52, 'F');
 
-SECTION 2: ENTITY RECOMMENDATION & LEGAL REASONING
-────────────────────────────────────────
-Recommended Entity: ${entity}
+  // Company name (acts as the branded title / logo)
+  doc.setTextColor(...WHITE);
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(22);
+  const nameLines = doc.splitTextToSize(companyName.toUpperCase(), contentW - 8);
+  doc.text(nameLines, margin + 5, 17);
 
-${reasoning}
+  const headerTextY = nameLines.length > 1 ? 17 + (nameLines.length - 1) * 9 : 17;
 
-════════════════════════════════════════════════════════════════
+  doc.setFontSize(11);
+  doc.setFont('helvetica', 'normal');
+  doc.text('ENTITY CHOICE MEMORANDUM', margin + 5, headerTextY + 11);
 
-SECTION 3: ENTITIES CONSIDERED & REJECTED
-────────────────────────────────────────
-${rejected}
+  doc.setFontSize(9);
+  doc.setFont('helvetica', 'italic');
+  doc.setTextColor(235, 232, 244);
+  doc.text('Recommended Entity: ' + entity, margin + 5, headerTextY + 19);
 
-════════════════════════════════════════════════════════════════
+  y = 55;
 
-SECTION 4: CO-FOUNDER NEGOTIATIONS & GOVERNANCE
-────────────────────────────────────────
-${cofounder}
+  // ── SUB-HEADER (lavender) ────────────────────────────────────────
+  doc.setFillColor(...LAVENDER);
+  doc.rect(0, y, pageW, 17, 'F');
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(8.5);
+  doc.setTextColor(...PURPLE);
+  doc.text('ELSE SCHOOL OF MANAGEMENT  |  MILLSAPS COLLEGE', margin + 5, y + 7);
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(8);
+  doc.setTextColor(...GRAY);
+  doc.text('Business Law  •  ' + date, margin + 5, y + 13);
 
-════════════════════════════════════════════════════════════════
+  y += 22;
 
-SECTION 5: PERSONAL REFLECTION
-────────────────────────────────────────
-${surprise}
+  // ── SECTION HELPER ───────────────────────────────────────────────
+  function addSection(title, content, isTable) {
+    if (y > pageH - 45) { doc.addPage(); y = 20; }
 
-════════════════════════════════════════════════════════════════
-  Generated via the Else School Business Builder
-  Else School of Management • Millsaps College
-════════════════════════════════════════════════════════════════
-`.trim();
+    // Section header bar
+    doc.setFillColor(...LAVENDER);
+    doc.rect(margin, y, contentW, 9, 'F');
+    doc.setFillColor(...PURPLE);
+    doc.rect(margin, y, 3, 9, 'F');
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(8.5);
+    doc.setTextColor(...PURPLE);
+    doc.text(title, margin + 8, y + 6);
+    y += 13;
 
-  downloadFile(memo, `${companyName.replace(/\s+/g, '_')}_Entity_Memorandum.txt`);
+    if (isTable) {
+      content.forEach(function(row) {
+        if (y > pageH - 18) { doc.addPage(); y = 20; }
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(8.5);
+        doc.setTextColor(...GRAY);
+        doc.text(row.label, margin + 4, y);
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(...TEXT);
+        var valLines = doc.splitTextToSize(row.val, contentW - 58);
+        doc.text(valLines, margin + 56, y);
+        y += Math.max(valLines.length * 5, 6) + 2;
+      });
+      y += 4;
+    } else {
+      if (!content || !content.trim()) {
+        doc.setFont('helvetica', 'italic');
+        doc.setFontSize(9);
+        doc.setTextColor(...GRAY);
+        doc.text('(No content provided)', margin + 4, y);
+        y += 8;
+        return;
+      }
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(10);
+      doc.setTextColor(...TEXT);
+      var paragraphs = content.split(/\n\n+/);
+      paragraphs.forEach(function(para) {
+        var lines = doc.splitTextToSize(para.trim(), contentW - 6);
+        lines.forEach(function(line) {
+          if (y > pageH - 18) { doc.addPage(); y = 20; }
+          doc.text(line, margin + 4, y);
+          y += 5.5;
+        });
+        y += 3; // paragraph gap
+      });
+      y += 4;
+    }
+  }
+
+  addSection('SECTION 1: COMPANY FORMATION DOCUMENT', docFields, true);
+  addSection('SECTION 2: ENTITY RECOMMENDATION & LEGAL REASONING', 'Recommended Entity: ' + entity + '\n\n' + reasoning, false);
+  addSection('SECTION 3: ENTITIES CONSIDERED & REJECTED', rejected, false);
+  addSection('SECTION 4: CO-FOUNDER NEGOTIATIONS & GOVERNANCE', cofounder, false);
+  addSection('SECTION 5: PERSONAL REFLECTION', surprise, false);
+
+  // ── FOOTER on every page ─────────────────────────────────────────
+  var totalPages = doc.internal.getNumberOfPages();
+  for (var p = 1; p <= totalPages; p++) {
+    doc.setPage(p);
+    doc.setFillColor(...PURPLE);
+    doc.rect(0, pageH - 13, pageW, 13, 'F');
+    doc.setFillColor(...PINK);
+    doc.rect(0, pageH - 13, pageW, 1.5, 'F');
+    doc.setTextColor(...WHITE);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(7);
+    doc.text('Generated via the Else School Business Builder  |  Else School of Management  •  Millsaps College', margin + 3, pageH - 5);
+    doc.text('Page ' + p + ' of ' + totalPages, pageW - margin - 3, pageH - 5, { align: 'right' });
+  }
+
+  doc.save(companyName.replace(/\s+/g, '_') + '_Entity_Memorandum.pdf');
 }
 
 function downloadTranscript() {
-  const lines = conversationHistory.map(m => {
+  const cn = document.getElementById('docCompanyName')?.textContent || 'Business Builder';
+  const date = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: 'mm', format: 'letter' });
+
+  const pageW = doc.internal.pageSize.getWidth();
+  const pageH = doc.internal.pageSize.getHeight();
+  const margin = 22;
+  const contentW = pageW - (margin * 2);
+
+  // Brand colors [R, G, B]
+  const PURPLE   = [33, 20, 95];
+  const LAVENDER = [235, 232, 244];
+  const GRAY     = [117, 120, 123];
+  const PINK     = [232, 75, 138];
+  const WHITE    = [255, 255, 255];
+  const TEXT     = [26, 26, 46];
+  const PURPLE_BG = [245, 243, 252]; // very light purple for tutor bubbles
+
+  let y = 0;
+
+  // ── HEADER BANNER (purple) ───────────────────────────────────────
+  doc.setFillColor(...PURPLE);
+  doc.rect(0, 0, pageW, 52, 'F');
+  doc.setFillColor(...PINK);
+  doc.rect(0, 0, 5, 52, 'F');
+
+  doc.setTextColor(...WHITE);
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(22);
+  const nameLines = doc.splitTextToSize(cn.toUpperCase(), contentW - 8);
+  doc.text(nameLines, margin + 5, 17);
+
+  const headerTextY = nameLines.length > 1 ? 17 + (nameLines.length - 1) * 9 : 17;
+
+  doc.setFontSize(11);
+  doc.setFont('helvetica', 'normal');
+  doc.text('CONVERSATION TRANSCRIPT', margin + 5, headerTextY + 11);
+
+  y = 55;
+
+  // ── SUB-HEADER (lavender) ────────────────────────────────────────
+  doc.setFillColor(...LAVENDER);
+  doc.rect(0, y, pageW, 17, 'F');
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(8.5);
+  doc.setTextColor(...PURPLE);
+  doc.text('ELSE SCHOOL OF MANAGEMENT  |  MILLSAPS COLLEGE', margin + 5, y + 7);
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(8);
+  doc.setTextColor(...GRAY);
+  doc.text('Business Law  •  ' + date, margin + 5, y + 13);
+
+  y += 22;
+
+  // ── MESSAGES ─────────────────────────────────────────────────────
+  conversationHistory.forEach(function(m) {
     const role = m.role === 'assistant' ? 'TUTOR' : 'STUDENT';
     const content = m.content
       .replace(/\[STAGE:\d\]/g, '').replace(/\[ADVANCE\]/g, '')
       .replace(/\[DOC_UPDATE:[^\]]+\]/g, '').replace(/DOC_UPDATE:\w+=.*?(?=DOC_UPDATE|[\n]|$)/g, '')
-      .replace(/\[CHOICES:.+?\]/g, '').trim();
-    return `[${role}]\n${content}\n`;
+      .replace(/\[CHOICES:.+?\]/g, '').replace(/\*\*/g, '').trim();
+    if (!content) return;
+
+    const isTutor = (role === 'TUTOR');
+    const bgColor = isTutor ? PURPLE_BG : [255, 255, 255];
+    const labelColor = isTutor ? PURPLE : PINK;
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(9.5);
+    const textLines = doc.splitTextToSize(content, contentW - 12);
+    const blockH = (textLines.length * 5.2) + 16;
+
+    if (y + blockH > pageH - 18) { doc.addPage(); y = 20; }
+
+    // Message box
+    doc.setFillColor(...bgColor);
+    doc.rect(margin, y, contentW, blockH, 'F');
+
+    // Colored left bar
+    doc.setFillColor(...labelColor);
+    doc.rect(margin, y, 3, blockH, 'F');
+
+    // Role label
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(7.5);
+    doc.setTextColor(...labelColor);
+    doc.text(role, margin + 7, y + 6.5);
+
+    // Message text
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(9.5);
+    doc.setTextColor(...TEXT);
+    doc.text(textLines, margin + 7, y + 13);
+
+    y += blockH + 3;
   });
 
-  const date = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-  const cn = document.getElementById('docCompanyName')?.textContent || 'Business Builder';
+  // ── FOOTER on every page ─────────────────────────────────────────
+  var totalPages = doc.internal.getNumberOfPages();
+  for (var p = 1; p <= totalPages; p++) {
+    doc.setPage(p);
+    doc.setFillColor(...PURPLE);
+    doc.rect(0, pageH - 13, pageW, 13, 'F');
+    doc.setFillColor(...PINK);
+    doc.rect(0, pageH - 13, pageW, 1.5, 'F');
+    doc.setTextColor(...WHITE);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(7);
+    doc.text('Generated via the Else School Business Builder  |  Else School of Management  •  Millsaps College', margin + 3, pageH - 5);
+    doc.text('Page ' + p + ' of ' + totalPages, pageW - margin - 3, pageH - 5, { align: 'right' });
+  }
 
-  const transcript = `
-ELSE SCHOOL BUSINESS BUILDER — CONVERSATION TRANSCRIPT
-${cn}
-Else School of Management | Millsaps College
-${date}
-──────────────────────────────────────
-
-${lines.join('\n──────────────────────────────────────\n\n')}
-
-──────────────────────────────────────
-END OF TRANSCRIPT
-`.trim();
-
-  downloadFile(transcript, `${cn.replace(/\s+/g, '_')}_Transcript.txt`);
+  doc.save(cn.replace(/\s+/g, '_') + '_Transcript.pdf');
 }
 
 function downloadFile(content, filename) {
